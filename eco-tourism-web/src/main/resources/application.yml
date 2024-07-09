@@ -1,0 +1,53 @@
+server.port: 8080
+
+# 微信小程序api配置
+wechat:
+  app-id: '你的小程序appId'
+  app-secret: '你的小程序appSecret'
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  info:
+    # 标题
+    title: '标题：生态旅游AI小程序接口文档'
+    # 描述
+    description: '描述：生态旅游AI小程序后端, 具体包括后端web模块, 爬虫模块'
+    # 版本
+    version: '版本号: V1.0.0'
+    # 作者信息
+    contact:
+      name: InwardFlow
+      email: admin@2wxk.com
+      url: https://github.com/inwardflow
+  #这里定义了两个分组，可定义多个，也可以不定义
+  group-configs:
+    - group: 小程序模块
+      packages-to-scan: com.zillionwon.web
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+# DataSource Config
+spring:
+  datasource:
+    # jdbc 所有参数配置参考 https://lionli.blog.csdn.net/article/details/122018562
+    # rewriteBatchedStatements=true 批处理优化 大幅提升批量插入更新删除性能(对数据库有性能损耗 使用批量操作应考虑性能问题)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.113.192.168:3306/ecotour?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&max_allowed_packet=1073741824&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+    username: ecotour
+    password: ecotour!123
+
+# Logger Config
+logging:
+  level:
+    com.baomidou.mybatisplus.samples.quickstart: debug
+
