@@ -1,5 +1,8 @@
 package com.zillionwon.web.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +11,13 @@ import java.util.List;
  * 景点总览实体类
  * @author InwardFlow
  */
+@TableName("sight_overview")
 public class SightOverview extends BaseEntity {
+
     /**
      * 景点 ID
      */
+    @TableId(value = "sight_id")
     private Long sightId;
     /**
      * 名称
@@ -161,6 +167,13 @@ public class SightOverview extends BaseEntity {
 
     public void setCloseTime(String closeTime) {
         this.closeTime = closeTime;
+    }
+    public Long getSightId() {
+        return sightId;
+    }
+
+    public void setSightId(Long sightId) {
+        this.sightId = sightId;
     }
 
     // Builder类

@@ -50,4 +50,3 @@ spring:
 logging:
   level:
     com.baomidou.mybatisplus.samples.quickstart: debug
-
