@@ -6,10 +6,13 @@ import com.zillionwon.web.domain.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
-import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.zillionwon.web.service.CityService;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +21,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
-/**
- * 获取城市列表
- *
- * @author InwardFlow
- */
 @Slf4j
 @RestController
 @RequestMapping("/webapi/mp/city")
@@ -34,66 +31,39 @@ public class CityController {
     private final List<CityVO> cities = getMockCities();
     private final List<String> tags = getMockTags();
 
-     // 添加查询指定城市的 POST 接口
-    @PostMapping("/search")
-    public ResponseEntity<R<List<CityVO>>> searchCity(@RequestBody Map<String, String> searchParams) {
-        String cityName = searchParams.get("cityName");
-        if (StrUtil.isBlank(cityName)) {
-            return ResponseEntity.badRequest().body(R.fail("城市名称不能为空"));
-        }
-        List<CityVO> filteredCities = cities.stream()
-                                            .filter(c -> c.getCityName().equalsIgnoreCase(cityName))
-                                            .collect(Collectors.toList());
-        return ResponseEntity.ok(R.ok("查询成功", filteredCities));
-    } 
+    @Autowired
+    private CityService cityService;
 
-    /**
-     * 通过输入城市名称，搜索相关城市
-     *
-     * @param cityName 城市名称
-     * @return 城市列表
-     */
-    @ApiOperation("获取城市列表")
+    // 现有的方法...
+
+    @GetMapping("/search")
+    public R<List<CityVO>> searchCities(@RequestParam(required = false) String cityName,
+                                        @RequestParam(required = false) Long tagId) {
+        List<CityVO> cities;
+        if (!StrUtil.isBlank(cityName)) {
+            cities = cityService.getCitiesByCityName(cityName);
+        } else if (tagId != null) {
+            cities = cityService.getCitiesByTag(tagId);
+        } else {
+            return R.fail("Invalid search parameters");
+        }
+        return cities.isEmpty() ? R.fail("No cities found") : R.ok(cities);
+    }
+
+    @GetMapping("/random")
+    public R<CityVO> getRandomCity() {
+        CityVO city = cityService.getRandomCity();
+        return city != null ? R.ok(city) : R.fail("No cities available");
+    }
+
     @GetMapping
-    public R<List<CityVO>> getCityList(@Parameter(name = "城市名") String cityName) {
+    public R<List<CityVO>> getCityList(@RequestParam(required = false) String cityName) {
         if (!StrUtil.isBlank(cityName)) {
             return R.ok(cities.stream().filter(o -> o.getCityName().equals(cityName)).collect(Collectors.toList()));
         }
         return R.ok(cities);
     }
 
-    /**
-     * 通过输入名称，搜索相关城市
-     *
-     * @return 城市
-     */
-    // @ApiOperation("随机城市")
-    // @GetMapping("/random")
-    // public R<CityVO> getRandomCity() {
-    //     /*
-    //       SELECT * FROM `table` AS t1 JOIN (SELECT ROUND(RAND() * ((SELECT MAX(id) FROM `table`)-(SELECT MIN(id) FROM `table`))+(SELECT MIN(id) FROM `table`)) AS id) AS t2
-    //       WHERE t1.id >= t2.id
-    //       ORDER BY t1.id LIMIT 1;
-    //      */
-    //     return R.ok(cities.get((int) (Math.random() + 0.5)));
-    // }
-
-    @PostMapping("/random")
-    public ResponseEntity<R<CityVO>> getRandomCity() {
-        if (cities.isEmpty()) {
-            return ResponseEntity.badRequest().body(R.fail("没有城市可选"));
-        }
-        int randomIndex = (int) (Math.random() * cities.size());
-        CityVO randomCity = cities.get(randomIndex);
-        return ResponseEntity.ok(R.ok("随机城市获取成功", randomCity));
-    }
-    
-
-    /**
-     * 返回一个城市列表（待废弃）
-     *
-     * @return 城市列表
-     */
     @PostMapping("/list")
     public ResponseEntity<R<List<CityVO>>> getCityList(@RequestBody(required = false) Map<String, String> filters) {
         Stream<CityVO> cityStream = cities.stream();
@@ -105,6 +75,13 @@ public class CityController {
         }
         List<CityVO> filteredCities = cityStream.collect(Collectors.toList());
         return ResponseEntity.ok(R.ok("城市列表获取成功", filteredCities));
+    }
+
+    // 添加新的端点: 根据标签ID获取城市列表
+    @GetMapping("/citiesByTag")
+    public ResponseEntity<List<CityVO>> getCitiesByTag(@RequestParam Long tagId) {
+        List<CityVO> cities = cityService.getCitiesByTag(tagId);
+        return ResponseEntity.ok(cities);
     }
 
     protected static List<CityVO> getMockCities() {
