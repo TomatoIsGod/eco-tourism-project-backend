@@ -1,18 +1,16 @@
 package com.zillionwon.web.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.zillionwon.web.domain.CityVO;
 import com.zillionwon.web.domain.R;
-import io.swagger.annotations.Api;
+import com.zillionwon.web.domain.vo.CityVO;
+import com.zillionwon.web.service.CityService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
-
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.zillionwon.web.service.CityService;
-
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +23,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/webapi/mp/city")
 @CrossOrigin
-@Api(tags = "城市接口服务")
+@Tag(name = "城市接口服务")
 public class CityController {
 
     private final List<CityVO> cities = getMockCities();
@@ -33,8 +31,6 @@ public class CityController {
 
     @Autowired
     private CityService cityService;
-
-    // 现有的方法...
 
     @GetMapping("/search")
     public R<List<CityVO>> searchCities(@RequestParam(required = false) String cityName,

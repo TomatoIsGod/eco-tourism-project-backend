@@ -34,6 +34,8 @@
         <selenium-logger.version>2.4.0</selenium-logger.version>
         <jakarta-annotation.version>2.1.1</jakarta-annotation.version>
         <lombok.version>1.18.30</lombok.version>
+        <mybatis-plus.version>3.5.7</mybatis-plus.version>
+        <mapstruct-plus.version>1.4.3</mapstruct-plus.version>
     </properties>
 
     <modules>
@@ -57,14 +59,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring-boot.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-devtools</artifactId>
-                <version>${spring-boot.version}</version>
-                <scope>runtime</scope>
-                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -142,11 +136,6 @@
                 <version>2.23.1</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>2.23.1</version>
-            </dependency>
-            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>2.0.13</version>
@@ -155,6 +144,13 @@
                 <groupId>jakarta.annotation</groupId>
                 <artifactId>jakarta.annotation-api</artifactId>
                 <version>${jakarta-annotation.version}</version>
+            </dependency>
+
+            <!-- MapStruct-Plus 类型转换器 -->
+            <dependency>
+                <groupId>io.github.linpeilie</groupId>
+                <artifactId>mapstruct-plus</artifactId>
+                <version>${mapstruct-plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

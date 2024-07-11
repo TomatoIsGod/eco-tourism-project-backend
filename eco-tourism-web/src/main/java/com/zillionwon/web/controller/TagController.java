@@ -1,6 +1,6 @@
 package com.zillionwon.web.controller;
 
-import com.zillionwon.web.domain.CityVO;
+import com.zillionwon.web.domain.vo.CityVO;
 import com.zillionwon.web.domain.R;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

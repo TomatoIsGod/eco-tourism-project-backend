@@ -1,5 +1,6 @@
 package com.zillionwon.web.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.Paths;
@@ -16,6 +17,7 @@ import java.util.List;
  *
  * @author InwardFlow
  */
+@EnableKnife4j
 @ConfigurationProperties(prefix = "springdoc")
 public class SpringDocProperties {
 

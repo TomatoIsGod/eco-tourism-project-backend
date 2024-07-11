@@ -1,4 +1,4 @@
-package com.zillionwon.web.domain;
+package com.zillionwon.web.domain.vo;
 
 import java.util.ArrayList;
 import java.util.Arrays;

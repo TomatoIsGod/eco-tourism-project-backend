@@ -2,8 +2,8 @@ server.port: 8080
 
 # 微信小程序api配置
 wechat:
-  app-id: '你的小程序appId'
-  app-secret: '你的小程序appSecret'
+  app-id: 'wx916723e144727550'
+  app-secret: 'ac83c25918f091165f8665177b3e45e4'
 
 # springdoc-openapi项目配置
 springdoc:
@@ -50,3 +50,13 @@ spring:
 logging:
   level:
     com.baomidou.mybatisplus.samples.quickstart: debug
+
+mybatis-plus:
+  configuration:
+    # MyBatis 配置
+    map-underscore-to-camel-case: true
+  global-config:
+    # 全局配置
+    db-config:
+      # 数据库配置
+      id-type: auto

@@ -1,9 +1,10 @@
-package com.zillionwon.web.domain;
+package com.zillionwon.web.domain.vo;
 
 import java.util.List;
 
 /**
  * 标签视图类
+ *
  * @author InwardFlow
  */
 public class TagVO {
