@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Spring Boot 启动类
@@ -14,6 +15,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties
 @ConfigurationPropertiesScan("com.zillionwon.*.config")
 @MapperScan("com.zillionwon.*.mapper")
+@ComponentScan("com.zillionwon.*")
 public class EcoTourismWebApplication {
     public static void main(String[] args) {
         SpringApplication.run(EcoTourismWebApplication.class, args);
