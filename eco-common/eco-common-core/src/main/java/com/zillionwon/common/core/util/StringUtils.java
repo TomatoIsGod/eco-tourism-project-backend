@@ -1,4 +1,4 @@
-package com.zillionwon.web.util;
+package com.zillionwon.common.core.util;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;

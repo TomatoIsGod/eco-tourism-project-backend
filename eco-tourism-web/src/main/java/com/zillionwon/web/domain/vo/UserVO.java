@@ -1,5 +1,7 @@
 package com.zillionwon.web.domain.vo;
 
+import io.github.linpeilie.annotations.AutoMapper;
+
 import java.time.OffsetDateTime;
 
 /**
@@ -7,6 +9,7 @@ import java.time.OffsetDateTime;
  *
  * @author InwardFlow
  */
+@AutoMapper(target = UserVO.class)
 public class UserVO {
     /**
      * 用户ID
@@ -56,4 +59,100 @@ public class UserVO {
      * 更新时间
      */
     private OffsetDateTime updateTime;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public OffsetDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(OffsetDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public OffsetDateTime getLoginDate() {
+        return loginDate;
+    }
+
+    public void setLoginDate(OffsetDateTime loginDate) {
+        this.loginDate = loginDate;
+    }
+
+    public String getLoginIp() {
+        return loginIp;
+    }
+
+    public void setLoginIp(String loginIp) {
+        this.loginIp = loginIp;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public OffsetDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(OffsetDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
 }

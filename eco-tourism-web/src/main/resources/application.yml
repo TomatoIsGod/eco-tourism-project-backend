@@ -15,17 +15,17 @@ springdoc:
     path: /v3/api-docs
   info:
     # 标题
-    title: '标题：生态旅游AI小程序接口文档'
+    title: '生态旅游AI小程序接口文档'
     # 描述
-    description: '描述：生态旅游AI小程序后端, 具体包括后端web模块, 爬虫模块'
+    description: '生态旅游AI小程序后端, 具体包括后端web模块, 爬虫模块'
     # 版本
-    version: '版本号: V1.0.0'
+    version: 'V1.0.0'
     # 作者信息
     contact:
       name: InwardFlow
       email: admin@2wxk.com
       url: https://github.com/inwardflow
-  #这里定义了两个分组，可定义多个，也可以不定义
+  # 这里定义了两个分组，可定义多个，也可以不定义
   group-configs:
     - group: 小程序模块
       packages-to-scan: com.zillionwon.web

@@ -6,7 +6,7 @@ import com.zillionwon.web.domain.vo.CityVO;
 import com.zillionwon.web.domain.vo.TagVO;
 import com.zillionwon.web.mapper.TagMapper;
 import com.zillionwon.web.service.ITagService;
-import com.zillionwon.web.util.MapstructUtils;
+import com.zillionwon.common.core.util.MapstructUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

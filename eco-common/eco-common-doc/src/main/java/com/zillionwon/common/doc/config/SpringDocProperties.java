@@ -1,10 +1,10 @@
-package com.zillionwon.web.config;
+package com.zillionwon.common.doc.config;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.tags.Tag;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -17,7 +17,6 @@ import java.util.List;
  *
  * @author InwardFlow
  */
-@EnableKnife4j
 @ConfigurationProperties(prefix = "springdoc")
 public class SpringDocProperties {
 
@@ -99,7 +98,7 @@ public class SpringDocProperties {
      *
      * 为了 springboot 自动生产配置提示信息，所以这里复制一个类出来
      */
-    public static class InfoProperties {
+    public static class InfoProperties extends Info {
         public String getTitle() {
             return title;
         }

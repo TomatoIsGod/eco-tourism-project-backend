@@ -7,7 +7,7 @@ import com.zillionwon.web.domain.User;
 import com.zillionwon.web.domain.vo.UserVO;
 import com.zillionwon.web.mapper.UserMapper;
 import com.zillionwon.web.service.IUserService;
-import com.zillionwon.web.util.StringUtils;
+import com.zillionwon.common.core.util.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**

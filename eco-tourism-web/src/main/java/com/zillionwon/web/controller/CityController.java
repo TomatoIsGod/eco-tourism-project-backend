@@ -19,11 +19,15 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * 城市接口服务
+ *
+ * @author InwardFlow
+ */
 @Slf4j
 @RestController
 @RequestMapping("/webapi/mp/city")
 @CrossOrigin
-@Tag(name = "城市接口服务")
 public class CityController {
 
     private final List<CityVO> cities = getMockCities();
@@ -32,6 +36,12 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
+    /**
+     * 查询城市
+     * @param cityName 城市名
+     * @param tagId 标签ID
+     * @return 城市集合
+     */
     @GetMapping("/search")
     public R<List<CityVO>> searchCities(@RequestParam(required = false) String cityName,
                                         @RequestParam(required = false) Long tagId) {
@@ -46,12 +56,21 @@ public class CityController {
         return cities.isEmpty() ? R.fail("No cities found") : R.ok(cities);
     }
 
+    /**
+     * 获取一个随机城市
+     * @return 城市信息
+     */
     @GetMapping("/random")
     public R<CityVO> getRandomCity() {
         CityVO city = cityService.getRandomCity();
         return city != null ? R.ok(city) : R.fail("No cities available");
     }
 
+    /**
+     * 获取城市列表
+     * @param cityName 城市名
+     * @return 城市列表
+     */
     @GetMapping
     public R<List<CityVO>> getCityList(@RequestParam(required = false) String cityName) {
         if (!StrUtil.isBlank(cityName)) {

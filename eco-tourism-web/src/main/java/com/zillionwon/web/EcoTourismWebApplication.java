@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  */
 @SpringBootApplication
 @EnableConfigurationProperties
-@ConfigurationPropertiesScan
+@ConfigurationPropertiesScan("com.zillionwon.*.config")
 @MapperScan("com.zillionwon.*.mapper")
 public class EcoTourismWebApplication {
     public static void main(String[] args) {

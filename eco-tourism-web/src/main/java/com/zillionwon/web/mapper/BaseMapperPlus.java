@@ -5,7 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.reflect.GenericTypeUtils;
-import com.zillionwon.web.util.MapstructUtils;
+import com.zillionwon.common.core.util.MapstructUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.List;
  * @param <V> vo 泛型
  * @author InwardFlow
  */
+@SuppressWarnings("unchecked")
 public interface BaseMapperPlus<T, V> extends BaseMapper<T> {
     default Class<V> currentVoClass() {
         GenericTypeUtils.resolveTypeArguments(this.getClass(), BaseMapperPlus.class);

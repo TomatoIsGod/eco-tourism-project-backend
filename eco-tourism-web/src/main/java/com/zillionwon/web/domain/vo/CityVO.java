@@ -9,6 +9,10 @@ import java.util.List;
  * @author InwardFlow
  */
 public class CityVO {
+    /**
+     * 城市名
+     */
+    private String cityName;
     public String getCityName() {
         return cityName;
     }
@@ -16,8 +20,6 @@ public class CityVO {
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
-
-    private String cityName;
 
     public List<String> getTags() {
         return tags;
