@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 微信小程序 API 配置类
+ *
  * @author InwardFlow
  */
 @Component

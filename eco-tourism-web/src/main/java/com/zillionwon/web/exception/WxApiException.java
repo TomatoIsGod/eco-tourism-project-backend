@@ -1,7 +1,8 @@
 package com.zillionwon.web.exception;
 
 /**
- * 微信 api 错误类
+ * 微信小程序 api 错误类
+ *
  * @author InwardFlow
  */
 public class WxApiException extends BaseException {
