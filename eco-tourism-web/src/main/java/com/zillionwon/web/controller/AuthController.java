@@ -25,6 +25,11 @@ import java.util.Objects;
 @RequestMapping("/auth")
 public class AuthController {
 
+    /**
+     * 登录认证接口
+     * @param body 响应主体
+     * @return 登录验证信息
+     */
     @PostMapping("/login")
     public R<LoginVO> login(@RequestBody String body) {
         // 反序列化 LoginBody

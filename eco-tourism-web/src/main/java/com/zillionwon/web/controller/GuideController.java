@@ -1,9 +1,8 @@
 package com.zillionwon.web.controller;
 
-import com.zillionwon.web.domain.vo.EventBo;
-import com.zillionwon.web.domain.PageQuery;
-import com.zillionwon.web.domain.vo.EventVO;
 import com.zillionwon.web.domain.R;
+import com.zillionwon.web.domain.vo.EventBo;
+import com.zillionwon.web.domain.vo.EventVO;
 import com.zillionwon.web.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 旅行指南
+ *
+ * @author Ciel3232
+ */
 @RestController
-public class ItineraryCardController {
+public class GuideController {
 
     @Autowired
     private EventService eventService;

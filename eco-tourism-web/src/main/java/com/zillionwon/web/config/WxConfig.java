@@ -1,6 +1,7 @@
 package com.zillionwon.web.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,9 +9,10 @@ import org.springframework.stereotype.Component;
  *
  * @author InwardFlow
  */
+
 @Component
-@ConfigurationProperties(prefix = "wechat")
-public class WeChatProperties {
+@ConfigurationProperties(prefix = "wx")
+public class WxConfig {
 
     private String appId;
     private String appSecret;
@@ -30,5 +32,10 @@ public class WeChatProperties {
 
     public void setAppSecret(String appSecret) {
         this.appSecret = appSecret;
+    }
+
+    @Bean(name = "wxAccessToken")
+    public String generateWxAccessToken() {
+        return "微信AccessToken";
     }
 }

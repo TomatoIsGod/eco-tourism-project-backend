@@ -2,7 +2,7 @@ package com.zillionwon.web.service;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONUtil;
-import com.zillionwon.web.config.WeChatProperties;
+import com.zillionwon.web.config.WxConfig;
 import com.zillionwon.web.exception.WxApiException;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,12 @@ import java.util.Map;
  * 微信小程序 api 服务
  * @author InwardFlow
  */
+
 @Service
 public class WxApiService {
-    public final WeChatProperties weChatProperties;
+    public final WxConfig weChatProperties;
     @Autowired
-    public WxApiService(WeChatProperties weChatProperties) {
+    public WxApiService(WxConfig weChatProperties) {
         this.weChatProperties = weChatProperties;
     }
 

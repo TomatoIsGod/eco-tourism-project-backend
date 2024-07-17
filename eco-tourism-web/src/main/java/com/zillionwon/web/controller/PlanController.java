@@ -11,8 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 旅行计划
+ *
+ * @author Ciel3232
+ */
+
 @RestController
-public class ItineraryPlanningController {
+public class PlanController {
 
     @Autowired
     private EventService eventService;

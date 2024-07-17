@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * 城市接口服务
+ * 城市接口
  *
  * @author InwardFlow
  */

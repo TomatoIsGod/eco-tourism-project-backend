@@ -1,7 +1,7 @@
 server.port: 8080
 
 # 微信小程序api配置
-wechat:
+wx:
   app-id: 'wx916723e144727550'
   app-secret: 'ac83c25918f091165f8665177b3e45e4'
 
