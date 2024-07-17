@@ -1,19 +1,27 @@
+import yaml
+import json
+import re
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
-import json
-import re
+
+# Load configuration from config.yaml
+with open('config.yaml', 'r') as file:
+    config = yaml.safe_load(file)
+
+json_file_path = config['input_file']
+webdriver_path = config['webdriver_path']
 
 # Set up Chrome options
 chrome_options = Options()
 # chrome_options.add_argument("--headless")  # Uncomment this line to run in headless mode
 
 # Set up the Chrome WebDriver
-service = Service('/usr/local/bin/chromedriver')
+service = Service(webdriver_path)
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 url = "https://you.ctrip.com/sight/suzhou11/s0-p1.html#sightname"
@@ -65,7 +73,6 @@ def clean_time(time_str):
     return ""
 
 # JSON file setup
-json_file_path = '/Users/yuanyifu/Desktop/Capgemini/爬虫/Suzhou_sight_data.json'
 sights_data = []
 
 # Function to extract sight items from a single page
@@ -103,7 +110,7 @@ def extract_sight_items():
         try:
             name_element = item.find_element(By.CSS_SELECTOR, 'div.titleModule_box__VMMFM > div > span:nth-child(1) > a')
             sight['name'] = name_element.text
-            sight['detail_url'] = name_element.get_attribute('href')
+            sight['detail_url'] = name_element.getAttribute('href')
         except Exception as e:
             print(f"Error extracting name: {e}")
         
@@ -224,7 +231,7 @@ def extract_sight_items():
         print(f"Successfully extracted data for {sight['name']}")
 
 # Loop through all pages
-total_pages = 300
+total_pages = 2
 for page in range(1, total_pages + 1):
     print(f"Processing page {page}/{total_pages}...")
     
@@ -255,7 +262,8 @@ for page in range(1, total_pages + 1):
 with open(json_file_path, 'w', encoding='utf-8') as json_file:
     json.dump(sights_data, json_file, ensure_ascii=False, indent=4)
 
+# Print the number of items scraped
+print(f"Number of items scraped: {len(sights_data)}")
+
 # Close the browser
 driver.quit()
-
-print("数据已成功输出为JSON文件")

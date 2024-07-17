@@ -1,6 +1,5 @@
-requests
-beautifulsoup4
-pandas
-sqlalchemy
-pymysql
-flask
+selenium==4.22.0
+mysql-connector-python==9.0.0
+PyYAML==6.0.1
+
+
