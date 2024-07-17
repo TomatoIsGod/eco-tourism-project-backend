@@ -1,41 +1,28 @@
 import subprocess
 import yaml
-import logging
-
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def run_script(script_path):
     result = subprocess.run(['python', script_path], capture_output=True, text=True)
     if result.returncode != 0:
-        logging.error(f"Error running {script_path}: {result.stderr}")
+        print(f"Error running {script_path}: {result.stderr}")
     else:
-        logging.info(f"Successfully ran {script_path}")
+        print(f"Successfully ran {script_path}")
 
 if __name__ == "__main__":
-    # Load configuration
+    # 加载配置文件
     with open('config.yaml', 'r') as file:
         config = yaml.safe_load(file)
 
-    # Run crawler script
-    logging.info("Running crawler script...")
-    try:
-        run_script('crawler/main_crawler.py')
-    except Exception as e:
-        logging.error(f"Failed to run crawler script: {e}")
+    # 运行爬虫脚本
+    print("Running crawler script...")
+    run_script('crawler/main_crawler.py')
 
-    # Run data cleaning script
-    logging.info("Running data cleaning script...")
-    try:
-        run_script('data_cleaning/clean_data.py')
-    except Exception as e:
-        logging.error(f"Failed to run data cleaning script: {e}")
+    # 运行数据清洗脚本
+    print("Running data cleaning script...")
+    run_script('data_cleaning/clean_data.py')
 
-    # Run database insert script
-    logging.info("Running database insert script...")
-    try:
-        run_script('database/db_insert.py')
-    except Exception as e:
-        logging.error(f"Failed to run database insert script: {e}")
+    # 运行数据库插入脚本
+    print("Running database insert script...")
+    run_script('database/db_insert.py')
 
-    logging.info("All tasks completed successfully.")
+    print("All tasks completed successfully.")

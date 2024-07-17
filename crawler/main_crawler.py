@@ -15,18 +15,34 @@ with open('config.yaml', 'r') as file:
 
 json_file_path = config['input_file']
 webdriver_path = config['webdriver_path']
+url = config['url']
 
 # Set up Chrome options
 chrome_options = Options()
-# chrome_options.add_argument("--headless")  # Uncomment this line to run in headless mode
+chrome_options.add_argument("--headless")  # Uncomment this line to run in headless mode
+chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("start-maximized")
+chrome_options.add_argument("disable-infobars")
+chrome_options.add_argument("--disable-extensions")
+chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+chrome_options.add_experimental_option('useAutomationExtension', False)
 
 # Set up the Chrome WebDriver
 service = Service(webdriver_path)
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
-url = "https://you.ctrip.com/sight/suzhou11/s0-p1.html#sightname"
+driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
+    "source": """
+    Object.defineProperty(navigator, 'webdriver', {
+      get: () => undefined
+    })
+    """
+})
 
-# Navigate to the first page
+# Navigate to the specified URL
 driver.get(url)
 
 # Increase the wait time to 30 seconds
@@ -98,65 +114,65 @@ def extract_sight_items():
         sight['detail_url'] = 'N/A'
         sight['detailed_address'] = 'N/A'
         sight['details'] = 'N/A'
-        
+
         # Extract image URL
         try:
             img = item.find_element(By.CSS_SELECTOR, 'div.coverModule_box__RH1cu > img')
             sight['cover_img_url'] = img.get_attribute('src')
         except Exception as e:
             print(f"Error extracting cover_img_url: {e}")
-        
+
         # Extract name and detail page URL
         try:
             name_element = item.find_element(By.CSS_SELECTOR, 'div.titleModule_box__VMMFM > div > span:nth-child(1) > a')
             sight['name'] = name_element.text
             sight['detail_url'] = name_element.get_attribute('href')
         except Exception as e:
-            print(f"Error extracting name: {e}")
-        
+            print(f"Error extracting name or detail_url: {e}")
+
         # Extract level
         try:
             sight['level'] = item.find_element(By.CSS_SELECTOR, 'span.titleModule_level-text-view__40Dbg.titleModule_level-text__lxAaP').text
         except Exception as e:
             print(f"Error extracting level: {e}")
-        
+
         # Extract rank tag
         try:
             sight['rank_tag'] = item.find_element(By.CSS_SELECTOR, 'div.rankInfoModule_rank_view__NUa8B > span').text
         except Exception as e:
             print(f"Error extracting rank_tag: {e}")
-        
+
         # Extract tags
         try:
             tags_elements = item.find_elements(By.CSS_SELECTOR, 'div.rankInfoModule_tag_list_view__4_nZC > div > span')
             sight['tags'] = ", ".join([tag.text for tag in tags_elements])
         except Exception as e:
             print(f"Error extracting tags: {e}")
-        
+
         # Extract heat
         try:
             sight['heat'] = item.find_element(By.CSS_SELECTOR, 'div.commentInfoModule_heat-score-view__yL8zo > span.commentInfoModule_heat-score_value__J8p3b').text
         except Exception as e:
             print(f"Error extracting heat: {e}")
-        
+
         # Extract score
         try:
             sight['score'] = item.find_element(By.CSS_SELECTOR, 'div.commentInfoModule_comment-view__LBx9p > span.commentInfoModule_comment-text__UBk1F.commentInfoModule_comment-score_value__iUsa8').text
         except Exception as e:
             print(f"Error extracting score: {e}")
-        
+
         # Extract review count
         try:
             sight['rater_count'] = item.find_element(By.CSS_SELECTOR, 'div.commentInfoModule_comment-view__LBx9p > span:nth-child(3)').text
         except Exception as e:
             print(f"Error extracting rater_count: {e}")
-        
+
         # Extract distance from city center
         try:
             sight['distance_from_city'] = item.find_element(By.CSS_SELECTOR, 'div.bottomModule_left-view__6arPk > div.distanceView_box__zWu29 > span:nth-child(3)').text
         except Exception as e:
             print(f"Error extracting distance_from_city: {e}")
-        
+
         # Extract price
         try:
             price_element = item.find_element(By.CSS_SELECTOR, 'div.bottomModule_right-view__wBeQE > div > div > span.priceView_real-price-text__xmmuA')
@@ -176,7 +192,7 @@ def extract_sight_items():
             except Exception as e:
                 print(f"Error extracting price: {e}")
                 sight['price'] = '-'
-        
+
         # Extract rough address
         try:
             address_element = item.find_element(By.CSS_SELECTOR, '#__next > div.sight_list_page_wrap > div.sight_list_page > div.sightListBox_box__XD4Au > div.cardListBox_box__lMuWz > div:nth-child(3) > div.baseInfoModule_box__r0bkr > div.bottomModule_box__dHx0U > div.bottomModule_left-view__6arPk > div.distanceView_box__zWu29 > span:nth-child(1)')

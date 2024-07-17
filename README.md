@@ -59,7 +59,10 @@ This project is designed to scrape, clean, and store data for an ecotourism AI m
       password: "ecotour!123"
       database: "ecotour"
     webdriver_path: "/path/to/your/chromedriver"
+    url: "https://you.ctrip.com/sight/suzhou11/s0-p1.html#sightname"  # Default URL for Suzhou
     ```
+
+    To scrape data for a different city, change the `url` field in the `config.yaml` file to the desired city's URL.
 
 ## Usage
 

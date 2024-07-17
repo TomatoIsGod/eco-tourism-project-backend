@@ -1,11 +1,12 @@
 # config.yaml
-input_file: "data/raw_data/Suzhou_sight_data.json"
-output_file: "data/cleaned_data/Suzhou_sight_data_cleaned_output.json"
+input_file: "data/Suzhou_sight_data.json" #replace Suzhou with your target scraped city
+output_file: "data/Suzhou_sight_data_cleaned_output.json" # #replace Suzhou with your target scraped city
 db_config:
   host: "47.113.192.168"
   user: "ecotour"
   password: "ecotour!123"
   database: "ecotour"
-webdriver_path: "/usr/local/bin/chromedriver"
+webdriver_path: "/usr/local/bin/chromedriver" #replace it with your own web_driver_path
+url: "https://you.ctrip.com/sight/suzhou11/s0-p1.html#sightname"  # Default URL for Suzhou. You can replace it with other cities' URL
 
 
