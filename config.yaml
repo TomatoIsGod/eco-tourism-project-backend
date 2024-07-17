@@ -1,6 +1,6 @@
 # config.yaml
-input_file: "data/Suzhou_sight_data.json"
-output_file: "data/Suzhou_sight_data_cleaned_output.json"
+input_file: "data/raw_data/Suzhou_sight_data.json"
+output_file: "data/cleaned_data/Suzhou_sight_data_cleaned_output.json"
 db_config:
   host: "47.113.192.168"
   user: "ecotour"

@@ -110,7 +110,7 @@ def extract_sight_items():
         try:
             name_element = item.find_element(By.CSS_SELECTOR, 'div.titleModule_box__VMMFM > div > span:nth-child(1) > a')
             sight['name'] = name_element.text
-            sight['detail_url'] = name_element.getAttribute('href')
+            sight['detail_url'] = name_element.get_attribute('href')
         except Exception as e:
             print(f"Error extracting name: {e}")
         
@@ -179,7 +179,7 @@ def extract_sight_items():
         
         # Extract rough address
         try:
-            address_element = item.find_element(By.CSS_SELECTOR, '#__next > div.sight_list_page_wrap > div.sight_list_page > div.sightListBox_box__XD4Au > div.cardListBox_box__lMuWz > div:nth-child(2) > div.baseInfoModule_box__r0bkr > div.bottomModule_box__dHx0U > div.bottomModule_left-view__6arPk > div > span:nth-child(1)')
+            address_element = item.find_element(By.CSS_SELECTOR, '#__next > div.sight_list_page_wrap > div.sight_list_page > div.sightListBox_box__XD4Au > div.cardListBox_box__lMuWz > div:nth-child(3) > div.baseInfoModule_box__r0bkr > div.bottomModule_box__dHx0U > div.bottomModule_left-view__6arPk > div.distanceView_box__zWu29 > span:nth-child(1)')
             sight['address'] = address_element.text
         except Exception as e:
             print(f"Error extracting address: {e}")
@@ -221,6 +221,10 @@ def extract_sight_items():
             driver.close()
             driver.switch_to.window(driver.window_handles[0])
 
+        # Update address if it is N/A
+        if sight['address'] == 'N/A' and sight['detailed_address'] != 'N/A':
+            sight['address'] = sight['detailed_address']
+
         # Skip if all fields are 'N/A' or None
         if all(value in ['N/A', None, 0.0, "-"] for value in sight.values()):
             print(f"Skipping {sight['name']} due to empty data.")
@@ -231,7 +235,7 @@ def extract_sight_items():
         print(f"Successfully extracted data for {sight['name']}")
 
 # Loop through all pages
-total_pages = 2
+total_pages = 3
 for page in range(1, total_pages + 1):
     print(f"Processing page {page}/{total_pages}...")
     
