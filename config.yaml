@@ -3,4 +3,5 @@ db_config:
   user: "ecotour"
   password: "ecotour!123"
   database: "ecotour"
-webdriver_path: "/usr/local/bin/chromedriver"
+webdriver_path: "/usr/local/bin/chromedriver" #替换为你自己的chromedriver路径
+image_save_path: "/Users/yuanyifu/Desktop/Capgemini/爬虫/成都"  # 指定保存图片的目录

@@ -2,6 +2,8 @@ import sys
 import json
 import re
 import time
+import os
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -26,6 +28,11 @@ with open('/Users/yuanyifu/Desktop/Capgemini/eco-tourism-project-backend/config.
     config = yaml.safe_load(file)
 
 webdriver_path = config['webdriver_path']
+image_save_path = config['image_save_path']
+
+# Ensure the image save directory exists
+if not os.path.exists(image_save_path):
+    os.makedirs(image_save_path)
 
 # Set up Chrome options
 chrome_options = Options()
@@ -98,6 +105,27 @@ def clean_time(time_str):
         return time_match.group()
     return ""
 
+# Function to sanitize filenames
+def sanitize_filename(filename):
+    return re.sub(r'[\\/*?:"<>|]', "_", filename)
+
+# Function to download image and save locally
+def download_image(image_url, save_path):
+    try:
+        print(f"Downloading image from {image_url}")
+        response = requests.get(image_url)
+        if response.status_code == 200:
+            with open(save_path, 'wb') as f:
+                f.write(response.content)
+            print(f"Image saved to {save_path}")
+            return True
+        else:
+            print(f"Error downloading image: {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"Error downloading image: {e}")
+        return False
+
 # JSON file setup
 sights_data = []
 
@@ -121,17 +149,11 @@ def extract_sight_items():
         sight['distance_from_city'] = 'N/A'
         sight['price'] = 0.0
         sight['cover_img_url'] = 'N/A'
+        sight['local_img_path'] = 'N/A'
         sight['detail_url'] = 'N/A'
         sight['detailed_address'] = 'N/A'
         sight['details'] = 'N/A'
         sight['city'] = city_name  # Use city_name from input
-
-        # Extract image URL
-        try:
-            img = item.find_element(By.CSS_SELECTOR, 'div.coverModule_box__RH1cu > img')
-            sight['cover_img_url'] = img.get_attribute('src')
-        except Exception as e:
-            print(f"Error extracting cover_img_url: {e}")
 
         # Extract name and detail page URL
         try:
@@ -140,6 +162,20 @@ def extract_sight_items():
             sight['detail_url'] = name_element.get_attribute('href')
         except Exception as e:
             print(f"Error extracting name or detail_url: {e}")
+
+        # Sanitize the name for use in filenames
+        sanitized_name = sanitize_filename(sight['name'])
+
+        # Extract image URL
+        try:
+            img = item.find_element(By.CSS_SELECTOR, 'div.coverModule_box__RH1cu > img')
+            sight['cover_img_url'] = img.get_attribute('src')
+            # Download image and save locally
+            image_save_path_full = os.path.join(image_save_path, f"{city_name}_{sanitized_name}.jpg")
+            if download_image(sight['cover_img_url'], image_save_path_full):
+                sight['local_img_path'] = image_save_path_full
+        except Exception as e:
+            print(f"Error extracting cover_img_url: {e}")
 
         # Extract level
         try:
@@ -262,7 +298,7 @@ def extract_sight_items():
         print(f"Successfully extracted data for {sight['name']}")
 
 # Loop through all pages
-total_pages = 3
+total_pages = 2
 for page in range(1, total_pages + 1):
     print(f"Processing page {page}/{total_pages}...")
     
