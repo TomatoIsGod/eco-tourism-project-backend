@@ -9,5 +9,5 @@ public enum GrantType {
     /**
      * 微信小程序
      */
-    Wx
+    wx
 }

@@ -1,6 +1,6 @@
 package com.zillionwon.web.domain;
 
-import com.zillionwon.web.constant.HttpStatus;
+import com.zillionwon.common.core.constant.HttpStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

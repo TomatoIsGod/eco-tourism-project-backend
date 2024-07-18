@@ -8,6 +8,7 @@ import com.zillionwon.web.domain.vo.UserVO;
 import com.zillionwon.web.mapper.UserMapper;
 import com.zillionwon.web.service.IUserService;
 import com.zillionwon.common.core.util.StringUtils;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,8 +30,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserVO selectUserByOpenId(String openId) {
-        return mapper.selectUserByOpenId(openId);
+    public UserVO selectUserByOpenId(@NonNull String openId) {
+        // 如果传入的 openId 为空则报错，或者返回 null
+        return StringUtils.isBlank(openId) ? null : mapper.selectUserByOpenId(openId);
     }
 
     private LambdaQueryWrapper<User> buildQueryWrapper(User bo) {

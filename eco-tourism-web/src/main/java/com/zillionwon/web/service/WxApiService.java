@@ -18,10 +18,10 @@ import java.util.Map;
 
 @Service
 public class WxApiService {
-    public final WxConfig weChatProperties;
+    private final WxConfig wxConfig;
     @Autowired
-    public WxApiService(WxConfig weChatProperties) {
-        this.weChatProperties = weChatProperties;
+    public WxApiService(WxConfig wxConfig) {
+        this.wxConfig = wxConfig;
     }
 
     /**
@@ -33,8 +33,8 @@ public class WxApiService {
 
         String requestUrl = "https://api.weixin.qq.com/sns/jscode2session";
         Map<String, String> requestUrlParam = new HashMap<>();
-        requestUrlParam.put("appid", weChatProperties.getAppId());
-        requestUrlParam.put("secret", weChatProperties.getAppSecret());
+        requestUrlParam.put("appid", wxConfig.getAppId());
+        requestUrlParam.put("secret", wxConfig.getAppSecret());
         requestUrlParam.put("js_code", wxCode);
         requestUrlParam.put("grant_type", "authorization_code");
         return validate(HttpRequest.post(requestUrl)
@@ -50,7 +50,7 @@ public class WxApiService {
      * @return 手机号
      */
     public String code2PhoneNumber(String wxCode) {
-        String requestUrl = "https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=" + getAccessToken();
+        String requestUrl = "https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=" + wxConfig.getAccessToken();
         Map<String, String> requestUrlParam = new HashMap<>();
         requestUrlParam.put("code", wxCode);
         return validate(JSONUtil.parseObj(HttpRequest.post(requestUrl)
@@ -58,24 +58,6 @@ public class WxApiService {
                 .timeout(5000)
                 .execute()
                 .body()).getStr("phone_number"));
-    }
-
-    /**
-     * 获取接口调用凭据
-     * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/mp-access-token/getAccessToken.html">微信官方开发者文档</a>
-     * @return access_token
-     */
-    public String getAccessToken() {
-        String requestUrl = "https://api.weixin.qq.com/cgi-bin/token";
-        Map<String, String> requestUrlParam = new HashMap<>();
-        requestUrlParam.put("appid", weChatProperties.getAppId());
-        requestUrlParam.put("secret", weChatProperties.getAppSecret());
-        requestUrlParam.put("grant_type", "client_credential");    // 默认参数
-        return validate(JSONUtil.parseObj(HttpRequest.post(requestUrl)
-                .body(JSONUtil.toJsonStr(requestUrlParam))
-                .timeout(5000)
-                .execute()
-                .body()).getStr("access_token"));
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.zillionwon.web.constant;
+package com.zillionwon.common.core.constant;
 
 /**
  * 返回状态码

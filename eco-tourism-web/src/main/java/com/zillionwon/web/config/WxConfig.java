@@ -1,7 +1,6 @@
 package com.zillionwon.web.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,10 +13,29 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "wx")
 public class WxConfig {
 
+    /**
+     * 微信小程序 AppId
+     */
     private String appId;
+
+    /**
+     * 微信小程序密钥
+     */
     private String appSecret;
 
-    // getter 和 setter 方法
+    /**
+     * 微信小程序 access_token
+     */
+    private String accessToken;
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
     public String getAppId() {
         return appId;
     }
@@ -32,10 +50,5 @@ public class WxConfig {
 
     public void setAppSecret(String appSecret) {
         this.appSecret = appSecret;
-    }
-
-    @Bean(name = "wxAccessToken")
-    public String generateWxAccessToken() {
-        return "微信AccessToken";
     }
 }

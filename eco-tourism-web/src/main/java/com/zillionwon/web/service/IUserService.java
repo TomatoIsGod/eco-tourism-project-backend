@@ -3,7 +3,7 @@ package com.zillionwon.web.service;
 import com.zillionwon.web.domain.vo.UserVO;
 
 /**
- * 城市 Service 接口
+ * 用户 Service 接口
  *
  * @author InwardFlow
  */
