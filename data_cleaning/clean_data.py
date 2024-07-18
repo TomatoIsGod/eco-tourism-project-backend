@@ -17,11 +17,11 @@ def clean_time(time_str):
 
 def is_invalid_entry(entry):
     invalid_values = ["N/A", "-", ""]
-    return all(value in invalid_values for value in entry.values())
+    return all(value in invalid_values for key, value in entry.items() if key != 'city')
 
 def should_remove_entry(entry):
     # Check if the entry should be removed based on tags
-    tags_to_remove = ["演唱会", "剧场剧院"]
+    tags_to_remove = ["演唱会", "剧场剧院", "看演出", "音乐节", "livehouse", "特色演出"]
     for tag in tags_to_remove:
         if tag in entry.get("tags", ""):
             return True
@@ -45,11 +45,11 @@ def clean_data(input_file, output_file):
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(cleaned_data, f, ensure_ascii=False, indent=4)
 
-    tags_to_remove = ["演唱会", "剧场剧院"]
+    tags_to_remove = ["演唱会", "剧场剧院", "看演出", "音乐节", "livehouse", "特色演出"]
     print(f"原始数据条数: {len(data)}")
     print(f"清洗后数据条数: {len(cleaned_data)}")
     print(f"删除的数据条数: {removed_count}")
-    print(f"其中，包含'演唱会'或'剧场剧院'标签的删除条数: {sum(1 for entry in data if any(tag in entry.get('tags', '') for tag in tags_to_remove))}")
+    print(f"其中，包含'演唱会'、'剧场剧院'、'音乐节'等标签的删除条数: {sum(1 for entry in data if any(tag in entry.get('tags', '') for tag in tags_to_remove))}")
 
 # 使用示例
 clean_data(input_file, output_file)
