@@ -1,4 +1,4 @@
-import yaml
+import sys
 import json
 import re
 import time
@@ -8,18 +8,28 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import yaml
+
+# Check command line arguments
+if len(sys.argv) != 5:
+    print("Usage: python main_crawler.py <city_name> <url> <input_file> <output_file>")
+    sys.exit(1)
+
+# Get city name, URL, input file, and output file from command line arguments
+city_name = sys.argv[1]
+url = sys.argv[2]
+input_file = sys.argv[3]
+output_file = sys.argv[4]
 
 # Load configuration from config.yaml
-with open('config.yaml', 'r') as file:
+with open('/Users/yuanyifu/Desktop/Capgemini/eco-tourism-project-backend/config.yaml', 'r') as file:
     config = yaml.safe_load(file)
 
-json_file_path = config['input_file']
 webdriver_path = config['webdriver_path']
-url = config['url']
 
 # Set up Chrome options
 chrome_options = Options()
-chrome_options.add_argument("--headless")  # Uncomment this line to run in headless mode
+# chrome_options.add_argument("--headless")  # comment this line to run in headless mode
 chrome_options.add_argument("--disable-blink-features=AutomationControlled")
 chrome_options.add_argument("--disable-gpu")
 chrome_options.add_argument("--no-sandbox")
@@ -114,6 +124,7 @@ def extract_sight_items():
         sight['detail_url'] = 'N/A'
         sight['detailed_address'] = 'N/A'
         sight['details'] = 'N/A'
+        sight['city'] = city_name  # Use city_name from input
 
         # Extract image URL
         try:
@@ -279,7 +290,7 @@ for page in range(1, total_pages + 1):
         break
 
 # Write JSON data to file
-with open(json_file_path, 'w', encoding='utf-8') as json_file:
+with open(input_file, 'w', encoding='utf-8') as json_file:
     json.dump(sights_data, json_file, ensure_ascii=False, indent=4)
 
 # Print the number of items scraped

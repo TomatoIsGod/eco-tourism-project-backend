@@ -1,6 +1,15 @@
+import sys
 import json
 import re
-import yaml
+
+# Check command line arguments
+if len(sys.argv) != 3:
+    print("Usage: python clean_data.py <input_file> <output_file>")
+    sys.exit(1)
+
+# Get input and output files from command line arguments
+input_file = sys.argv[1]
+output_file = sys.argv[2]
 
 def clean_time(time_str):
     match = re.search(r'\d{2}:\d{2}', time_str)
@@ -8,12 +17,14 @@ def clean_time(time_str):
 
 def is_invalid_entry(entry):
     invalid_values = ["N/A", "-", ""]
-    invalid_count = sum(1 for value in entry.values() if value in invalid_values)
-    return invalid_count > len(entry) / 2
+    return all(value in invalid_values for value in entry.values())
 
 def should_remove_entry(entry):
-    if "演唱会" in entry.get("tags", ""):
-        return True
+    # Check if the entry should be removed based on tags
+    tags_to_remove = ["演唱会", "剧场剧院"]
+    for tag in tags_to_remove:
+        if tag in entry.get("tags", ""):
+            return True
     return is_invalid_entry(entry)
 
 def clean_data(input_file, output_file):
@@ -24,6 +35,7 @@ def clean_data(input_file, output_file):
     removed_count = 0
     for entry in data:
         if not should_remove_entry(entry):
+            # Clean open_time and close_time fields
             entry['open_time'] = clean_time(entry['open_time'])
             entry['close_time'] = clean_time(entry['close_time'])
             cleaned_data.append(entry)
@@ -33,21 +45,12 @@ def clean_data(input_file, output_file):
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(cleaned_data, f, ensure_ascii=False, indent=4)
 
+    tags_to_remove = ["演唱会", "剧场剧院"]
     print(f"原始数据条数: {len(data)}")
     print(f"清洗后数据条数: {len(cleaned_data)}")
     print(f"删除的数据条数: {removed_count}")
-    print(f"其中，包含'演唱会'标签的删除条数: {sum(1 for entry in data if '演唱会' in entry.get('tags', ''))}")
+    print(f"其中，包含'演唱会'或'剧场剧院'标签的删除条数: {sum(1 for entry in data if any(tag in entry.get('tags', '') for tag in tags_to_remove))}")
 
-if __name__ == "__main__":
-    with open('config.yaml', 'r') as file:
-        config = yaml.safe_load(file)
-
-    input_file = config['input_file']
-    output_file = config['output_file']
-
-    clean_data(input_file, output_file)
-
-    # Print the number of items in the cleaned data file
-    with open(output_file, 'r', encoding='utf-8') as f:
-        cleaned_data = json.load(f)
-        print(f"Number of items after cleaning: {len(cleaned_data)}")
+# 使用示例
+clean_data(input_file, output_file)
+print("Data cleaning completed successfully.")

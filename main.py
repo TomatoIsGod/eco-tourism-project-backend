@@ -1,28 +1,26 @@
-import subprocess
-import yaml
+import os
 
-def run_script(script_path):
-    result = subprocess.run(['python', script_path], capture_output=True, text=True)
-    if result.returncode != 0:
-        print(f"Error running {script_path}: {result.stderr}")
-    else:
-        print(f"Successfully ran {script_path}")
+# Main function to interact with the user
+def main():
+    city_name = input("请输入城市名称: ")
+    url = input("请输入城市URL: ")
+
+    # Generate file paths
+    input_file = f"data/raw_data/{city_name}_sight_data.json"
+    output_file = f"data/cleaned_data/{city_name}_sight_data_cleaned.json"
+
+  # Run the crawler script with arguments
+    os.system(f'python /Users/yuanyifu/Desktop/Capgemini/eco-tourism-project-backend/crawler/main_crawler.py "{city_name}" "{url}" "{input_file}" "{output_file}"')
+    print(f"成功爬取{city_name}数据")
+
+    # Run the data cleaning script
+    os.system(f'python /Users/yuanyifu/Desktop/Capgemini/eco-tourism-project-backend/data_cleaning/clean_data.py "{input_file}" "{output_file}"')
+    print(f"成功清洗{city_name}数据")
+
+    # Run the database insert script
+    os.system(f'python /Users/yuanyifu/Desktop/Capgemini/eco-tourism-project-backend/database/db_insert.py "{output_file}"')
+    print(f"成功存储{city_name}数据")
+
 
 if __name__ == "__main__":
-    # 加载配置文件
-    with open('config.yaml', 'r') as file:
-        config = yaml.safe_load(file)
-
-    # 运行爬虫脚本
-    print("Running crawler script...")
-    run_script('crawler/main_crawler.py')
-
-    # 运行数据清洗脚本
-    print("Running data cleaning script...")
-    run_script('data_cleaning/clean_data.py')
-
-    # 运行数据库插入脚本
-    print("Running database insert script...")
-    run_script('database/db_insert.py')
-
-    print("All tasks completed successfully.")
+    main()
