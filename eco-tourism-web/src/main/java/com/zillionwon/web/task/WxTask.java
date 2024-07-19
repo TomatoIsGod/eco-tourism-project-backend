@@ -36,7 +36,7 @@ public class WxTask {
     // TODO: 使用 xxl-job 重写
     @Scheduled(initialDelay = 5000, fixedDelay = 7200 * 1000)
     public void getAccessTokenTask() {
-        log.info("");
+        log.info("正在获取 wxAccessToken, 当前时间: {}", System.currentTimeMillis());
         String requestUrl = "https://api.weixin.qq.com/cgi-bin/token";
         Map<String, String> requestUrlParam = new HashMap<>();
         requestUrlParam.put("appid", wxConfig.getAppId());
@@ -48,5 +48,6 @@ public class WxTask {
                 .timeout(5000)
                 .execute()
                 .body()).getStr("access_token")));
+        log.info("刷新 wxAccessToken 成功!");
     }
 }
