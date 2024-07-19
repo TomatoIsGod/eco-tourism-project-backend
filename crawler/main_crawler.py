@@ -271,7 +271,7 @@ except Exception as e:
     exit()
 
 # Loop through all pages
-total_pages = 1
+total_pages = 2
 for page in range(1, total_pages + 1):
     print(f"Processing page {page}/{total_pages}...")
     
