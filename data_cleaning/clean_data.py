@@ -49,7 +49,7 @@ def clean_data(input_file, output_file):
     print(f"原始数据条数: {len(data)}")
     print(f"清洗后数据条数: {len(cleaned_data)}")
     print(f"删除的数据条数: {removed_count}")
-    print(f"其中，包含'演唱会'、'剧场剧院'、'音乐节'等标签的删除条数: {sum(1 for entry in data if any(tag in entry.get('tags', '') for tag in tags_to_remove))}")
+    print(f"其中，包含'演唱会'、'音乐节'等标签的删除条数: {sum(1 for entry in data if any(tag in entry.get('tags', '') for tag in tags_to_remove))}")
 
 # 使用示例
 clean_data(input_file, output_file)

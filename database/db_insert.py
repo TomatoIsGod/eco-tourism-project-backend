@@ -1,34 +1,28 @@
-import sys
 import json
 import mysql.connector
 from datetime import datetime
-import yaml
 
 # Check command line arguments
+import sys
 if len(sys.argv) != 2:
     print("Usage: python db_insert.py <output_file>")
     sys.exit(1)
 
-# Get output file from command line arguments
 output_file = sys.argv[1]
 
 # Load JSON data
 with open(output_file, 'r', encoding='utf-8') as f:
     sights = json.load(f)
 
-# Load database configuration from config.yaml
-with open('/Users/yuanyifu/Desktop/Capgemini/eco-tourism-project-backend/config.yaml', 'r') as file:
+# Load configuration from config.yaml
+import yaml
+with open('config.yaml', 'r') as file:
     config = yaml.safe_load(file)
 
 db_config = config['db_config']
 
 # Connect to MySQL
-cnx = mysql.connector.connect(
-    host=db_config['host'],
-    user=db_config['user'],
-    password=db_config['password'],
-    database=db_config['database']
-)
+cnx = mysql.connector.connect(**db_config)
 cursor = cnx.cursor()
 
 # Prepare the INSERT statement
@@ -38,6 +32,14 @@ insert_stmt = (
     "distance_from_city, price, cover_img_url, open_time, close_time, city) "
     "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 )
+
+def parse_time(time_str):
+    if time_str and time_str != '-':
+        try:
+            return datetime.strptime(time_str, '%H:%M').time()
+        except ValueError:
+            return None
+    return None
 
 for item in sights:
     # Handle missing or invalid values
@@ -59,21 +61,12 @@ for item in sights:
         price = None
     
     cover_img_url = item.get('cover_img_url', '')
+    city = item.get('city', '')
     
     # Handle open_time and close_time
-    def parse_time(time_str):
-        if time_str and time_str != '-':
-            try:
-                return datetime.combine(datetime.today(), datetime.strptime(time_str, '%H:%M').time())
-            except ValueError:
-                return None
-        return None
-    
     open_time = parse_time(item.get('open_time', ''))
     close_time = parse_time(item.get('close_time', ''))
     
-    city = item.get('city', '')
-
     # Execute the INSERT statement
     cursor.execute(insert_stmt, (name, level, rank_tag, tags_id, heat, score, rater_count,
                                  address, distance_from_city, price, cover_img_url,

@@ -4,5 +4,5 @@ db_config:
   password: "ecotour!123"
   database: "ecotour"
 webdriver_path: "/usr/local/bin/chromedriver" #替换为你自己的chromedriver路径
-image_save_path: "/Users/yuanyifu/Desktop/Capgemini/爬虫/图片/杭州"  # 指定保存图片的目录
+local_image_path: "/Users/yuanyifu/Desktop/Capgemini/爬虫/图片"  # 指定保存图片的目录
 base_url: "https://you.ctrip.com/sight/"   #请根据城市景点列表页面的URL调整
