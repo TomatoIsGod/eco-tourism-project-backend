@@ -1,50 +1,51 @@
 package com.zillionwon.web.controller;
 
-import com.zillionwon.web.domain.vo.EventBo;
-import com.zillionwon.web.domain.PageQuery;
-import com.zillionwon.web.domain.vo.EventVO;
-import com.zillionwon.web.domain.R;
-import com.zillionwon.web.service.EventService;
+import com.zillionwon.web.domain.dto.RouteReportDTO;
+import com.zillionwon.web.domain.dto.SightDetailDTO;
+import com.zillionwon.web.service.SightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
- * 旅行计划
- *
- * @author Ciel3232
+ * 旅行详细路书接口
  */
-
 @RestController
+@RequestMapping("/api")
 public class PlanController {
 
     @Autowired
-    private EventService eventService;
+    private SightService sightService;
 
-    @GetMapping("/itinerary/travelStyle")
-    public R<List<EventVO>> getTravelStyleData(EventBo eventBo, PageQuery pageQuery) {
-        return eventService.getTravelStyleData(eventBo, pageQuery);
+    /**
+     * 城市详情数据
+     * @param city
+     * @return
+     */
+    @GetMapping("/getRouteReportData")
+    public RouteReportDTO getRouteReportData(@RequestParam String city) {
+        return sightService.getRouteReportData(city);
     }
 
-    @GetMapping("/itinerary/routeReport")
-    public R<EventVO> getRouteReportData(EventBo eventBo) {
-        return eventService.getRouteReportData(eventBo);
+    /**
+     * 城市详情数据：点击“第1天/第2天...”
+     * @param city
+     * @param day
+     * @return
+     */
+    @GetMapping("/getDayDetail")
+    public RouteReportDTO.DayDetail getDayDetail(@RequestParam String city, @RequestParam int day) {
+        return sightService.getDayDetail(city, day);
     }
-
-    @GetMapping("/itinerary/routeReport/collect")
-    public R<Void> collectRouteReport(EventBo eventBo) {
-        return eventService.collectRouteReport(eventBo);
-    }
-
-    @GetMapping("/itinerary/attractionDetails")
-    public R<EventVO> getAttractionDetails(EventBo eventBo) {
-        return eventService.getAttractionDetails(eventBo);
-    }
-
-    @GetMapping("/itinerary/collectionList")
-    public R<List<EventVO>> getCollectionList(EventBo eventBo, PageQuery pageQuery) {
-        return eventService.getCollectionList(eventBo, pageQuery);
+    /**
+     * 景区详情数据
+     * @param sightId
+     * @return
+     */
+    @GetMapping("/getSightDetail")
+    public SightDetailDTO getSightDetail(@RequestParam Long sightId) {
+        return sightService.getSightDetail(sightId);
     }
 }
