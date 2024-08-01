@@ -1,6 +1,6 @@
 package com.zillionwon.web.controller;
 
-import com.zillionwon.web.domain.R;
+import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.domain.UserFavorites;
 import com.zillionwon.web.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+/**
+ * 用户收藏夹接口
+ *
+ * @author black
+ */
 
 @RestController
 @RequestMapping("/UserFavorites")

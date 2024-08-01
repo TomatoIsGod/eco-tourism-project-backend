@@ -1,9 +1,11 @@
 package com.zillionwon.web.service;
 
+import com.zillionwon.web.domain.Style;
 import com.zillionwon.web.mapper.StyleMapper;
 import com.zillionwon.web.mapper.UserFavoritesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -13,45 +15,45 @@ public class StyleService {
     private StyleMapper StyleMapper;
     /**
      * 获取用户的收藏列表
-     * @param StyleId 风格ID
+     * @param styleId 风格ID
      * @return 返回对应风格
      */
-    public List<String> getStyleId(Long StyleId) {
-        return StyleMapper.findByStyleId(StyleId);
+    public Style getStyleId(Long styleId) {
+        return  StyleMapper.findByStyleId(styleId);
     }
 
     /**
      * 获取用户的收藏列表
-     * @param StyleName 风格名称
+     * @param styleName 风格名称
      * @return 返回对应风格
      */
-public List<String> searchStyleName(String StyleName) {
-        return StyleMapper.findByStyleName(StyleName);
+public Style searchStyleName(String styleName) {
+        return StyleMapper.findByStyleName(styleName);
     }
 
     /**
      * 添加新的风格
-     * @param StyleId 风格ID
-     * @param StyleName 风格名称
+     * @param styleId 风格ID
+     * @param styleName 风格名称
      */
-    public void addStyle(Long StyleId, String StyleName) {
-        StyleMapper.insert(StyleId, StyleName);
+    public void addStyle(Long styleId, String styleName) {
+        StyleMapper.insert(styleId, styleName);
     }
 
     /**
      * 删除风格
-     * @param StyleId 风格ID
-     * @param StyleName 风格名称
+     * @param styleId 风格ID
+     * @param styleName 风格名称
      */
-    public void deleteStyle(Long StyleId, String StyleName) {
-        StyleMapper.delete(StyleId, StyleName);
+    public void deleteStyle(@RequestParam(required = false) Long styleId, @RequestParam(required = false)String styleName) {
+        StyleMapper.delete(styleId, styleName);
     }
 
     /**
      * 更改风格名字
      */
-    public void updateStyleName(Long StyleId, String StyleName) {
-        StyleMapper.updateStyleName(StyleId, StyleName);
+    public void updateStyleName(Long styleId, String styleName) {
+        StyleMapper.updateStyleName(styleId, styleName);
     }
 
 }

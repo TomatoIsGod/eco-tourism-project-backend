@@ -1,7 +1,7 @@
 package com.zillionwon.web.controller;
 
 import com.zillionwon.web.domain.vo.CityVO;
-import com.zillionwon.web.domain.R;
+import com.zillionwon.common.core.domain.R;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,9 +17,11 @@ import java.util.Map;
 import static com.zillionwon.web.controller.CityController.getMockCities;
 
 /**
- * 分类控制器
+ * 分类接口
+ *
  * @author InwardFlow
  */
+
 @Slf4j
 @RestController
 @RequestMapping("/webapi/mp/category")

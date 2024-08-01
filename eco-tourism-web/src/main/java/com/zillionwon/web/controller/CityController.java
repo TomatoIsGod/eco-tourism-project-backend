@@ -1,7 +1,7 @@
 package com.zillionwon.web.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.zillionwon.web.domain.R;
+import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.domain.vo.CityVO;
 import com.zillionwon.web.service.CityService;
 import io.swagger.annotations.ApiOperation;
@@ -23,9 +23,10 @@ import java.util.stream.Stream;
  *
  * @author InwardFlow
  */
+
 @Slf4j
 @RestController
-@RequestMapping("/webapi/mp/city")
+@RequestMapping("/city")
 @CrossOrigin
 public class CityController {
 

@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 旅行详细路书接口
+ *
+ * @author Ciel3232
  */
+
 @RestController
 @RequestMapping("/api")
 public class PlanController {
@@ -21,8 +24,8 @@ public class PlanController {
 
     /**
      * 城市详情数据
-     * @param city
-     * @return
+     * @param city 城市名称
+     * @return 路线报告
      */
     @GetMapping("/getRouteReportData")
     public RouteReportDTO getRouteReportData(@RequestParam String city) {
@@ -31,17 +34,18 @@ public class PlanController {
 
     /**
      * 城市详情数据：点击“第1天/第2天...”
-     * @param city
-     * @param day
+     * @param city 城市名称
+     * @param day 索引 (第 n 天)
      * @return
      */
     @GetMapping("/getDayDetail")
     public RouteReportDTO.DayDetail getDayDetail(@RequestParam String city, @RequestParam int day) {
         return sightService.getDayDetail(city, day);
     }
+
     /**
      * 景区详情数据
-     * @param sightId
+     * @param sightId 景点ID
      * @return
      */
     @GetMapping("/getSightDetail")
