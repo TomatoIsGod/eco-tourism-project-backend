@@ -28,6 +28,5 @@ public class Style {
     public void setStyleName(String StyleName) {
         this.StyleName = StyleName;
     }
-
 }
 

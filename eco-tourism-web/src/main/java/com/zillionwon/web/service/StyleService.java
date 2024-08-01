@@ -13,45 +13,57 @@ import java.util.List;
 public class StyleService {
     @Autowired
     private StyleMapper StyleMapper;
+
     /**
-     * 获取用户的收藏列表
-     * @param styleId 风格ID
-     * @return 返回对应风格
+     * @return 返回所有风格
      */
-    public Style getStyleId(Long styleId) {
-        return  StyleMapper.findByStyleId(styleId);
+    public List<Style> getAllStyle() {
+        return StyleMapper.findAll();
     }
 
     /**
      * 获取用户的收藏列表
+     *
+     * @param styleId 风格ID
+     * @return 返回对应风格
+     */
+    public Style getStyleById(Long styleId) {
+        return StyleMapper.findByStyleId(styleId);
+    }
+
+    /**
+     * 获取用户的收藏列表
+     *
      * @param styleName 风格名称
      * @return 返回对应风格
      */
-public Style searchStyleName(String styleName) {
+    public Style searchStyleByName(String styleName) {
         return StyleMapper.findByStyleName(styleName);
     }
 
     /**
      * 添加新的风格
-     * @param styleId 风格ID
+     *
      * @param styleName 风格名称
      */
-    public void addStyle(Long styleId, String styleName) {
+    public void addStyle(String styleName) {
+        long styleId = StyleMapper.findAll().size() + 1;
         StyleMapper.insert(styleId, styleName);
     }
 
     /**
      * 删除风格
+     *
      * @param styleId 风格ID
-     * @param styleName 风格名称
      */
-    public void deleteStyle(@RequestParam(required = false) Long styleId, @RequestParam(required = false)String styleName) {
-        StyleMapper.delete(styleId, styleName);
+    public void deleteStyle(@RequestParam Long styleId) {
+        StyleMapper.delete(styleId);
     }
 
     /**
      * 更改风格名字
      */
+
     public void updateStyleName(Long styleId, String styleName) {
         StyleMapper.updateStyleName(styleId, styleName);
     }
