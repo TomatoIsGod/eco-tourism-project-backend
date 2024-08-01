@@ -4,7 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.zillionwon.common.core.util.ValidatorUtils;
 import com.zillionwon.web.constant.GrantType;
 import com.zillionwon.web.domain.LoginBody;
-import com.zillionwon.web.domain.R;
+import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.domain.vo.LoginVO;
 import com.zillionwon.web.service.IAuthStrategy;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +20,7 @@ import java.util.Objects;
  *
  * @author InwardFlow
  */
+
 @Slf4j
 @RestController
 @RequestMapping("/auth")

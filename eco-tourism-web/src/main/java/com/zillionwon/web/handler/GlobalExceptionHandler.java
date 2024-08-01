@@ -1,6 +1,6 @@
 package com.zillionwon.web.handler;
 
-import com.zillionwon.web.domain.R;
+import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.exception.WxApiException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

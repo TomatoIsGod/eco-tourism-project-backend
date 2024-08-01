@@ -1,6 +1,6 @@
 package com.zillionwon.web.controller;
 
-import com.zillionwon.web.domain.R;
+import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.service.WxApiService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author InwardFlow
  */
+
 @RestController
 @RequestMapping("/wxLogin")
 @CrossOrigin

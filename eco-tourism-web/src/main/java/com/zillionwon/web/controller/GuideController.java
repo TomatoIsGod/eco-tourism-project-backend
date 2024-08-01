@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Ciel3232
  */
+
 @RestController
 @RequestMapping("/api")
 public class GuideController {

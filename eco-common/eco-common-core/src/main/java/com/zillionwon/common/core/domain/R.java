@@ -1,4 +1,4 @@
-package com.zillionwon.web.domain;
+package com.zillionwon.common.core.domain;
 
 import com.zillionwon.common.core.constant.HttpStatus;
 import lombok.Data;

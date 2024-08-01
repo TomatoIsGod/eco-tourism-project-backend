@@ -1,6 +1,6 @@
 package com.zillionwon.web.controller;
 
-import com.zillionwon.web.domain.R;
+import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.domain.UserFavorites;
 import com.zillionwon.web.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,21 +8,27 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 旅行风格接口
+ *
+ * @author black
+ */
+
 @RestController
-@RequestMapping("/Style")
+@RequestMapping("/style")
 public class StyleController {
     private final StyleService StyleService;
     @Autowired
-    public StyleController(StyleService StyleService) {
-        this.StyleService = StyleService;
+    public StyleController(StyleService styleService) {
+        this.StyleService = styleService;
     }
 
     /**
      * 获取对应id的风格
      */
     @GetMapping("/style")
-    public R<List<String>> getStyleId(@RequestParam Long StyleId) {
-        List<String> style = StyleService.getStyleId(StyleId);
+    public R<List<String>> getStyleId(@RequestParam Long styleId) {
+        List<String> style = StyleService.getStyleId(styleId);
         return R.ok("获取成功", style);
     }
 
@@ -30,8 +36,8 @@ public class StyleController {
      * 搜索对应风格名称的风格
      */
     @GetMapping("/search")
-    public R<List<String>> searchStyleName(@RequestParam String StyleName) {
-        List<String> matchedStyle = StyleService.searchStyleName(StyleName);
+    public R<List<String>> searchStyleName(@RequestParam String styleName) {
+        List<String> matchedStyle = StyleService.searchStyleName(styleName);
         return R.ok("搜索成功", matchedStyle);
     }
 
