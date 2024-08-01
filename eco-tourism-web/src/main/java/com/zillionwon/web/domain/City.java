@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @author InwardFlow
  */
 @TableName("city")
-public class City {
+public class City extends BaseEntity {
     @TableId
     private Long cityId;
     private String cityName;

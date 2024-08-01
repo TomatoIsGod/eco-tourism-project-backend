@@ -2,6 +2,9 @@ package com.zillionwon.web.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.zillionwon.common.core.domain.R;
+import com.zillionwon.web.domain.City;
+import com.zillionwon.web.domain.PageQuery;
+import com.zillionwon.web.domain.TableDataInfo;
 import com.zillionwon.web.domain.vo.CityVO;
 import com.zillionwon.web.service.CityService;
 import io.swagger.annotations.ApiOperation;
@@ -163,4 +166,26 @@ public class CityController {
     public R<CityVO> getCityById(@Parameter(name = "城市ID") @PathVariable Long cityId) {
         return R.ok(Objects.requireNonNull(cities.get(Math.toIntExact(cityId))));
     }
+
+    /**
+     * 查询城市信息 (分页)
+     *
+     * @param cityBo 城市业务层对象
+     * @param pageQuery 分页
+     * @return 城市列表 (分页对象)
+     */
+    @GetMapping("/list")
+    public TableDataInfo<CityVO> list(City cityBo, PageQuery pageQuery) {
+        return cityService.queryPageList(cityBo, pageQuery);
+    }
+
+    /**
+     * 查询城市信息 (不分页)
+     * @param cityBo 城市业务层对象
+     * @return 城市列表
+     */
+    public List<CityVO> getAll(City cityBo) {
+        return cityService.queryList(cityBo);
+    }
+
 }
