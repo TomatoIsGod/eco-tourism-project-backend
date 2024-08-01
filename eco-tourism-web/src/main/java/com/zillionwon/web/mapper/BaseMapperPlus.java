@@ -4,7 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.reflect.GenericTypeUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zillionwon.common.core.util.MapstructUtils;
 
 import java.io.Serializable;
@@ -46,5 +48,26 @@ public interface BaseMapperPlus<T, V> extends BaseMapper<T> {
             return CollUtil.newArrayList();
         }
         return MapstructUtils.convert(list, voClass);
+    }
+
+    default List<V> selectVoList(Wrapper<T> wrapper) {
+        return selectVoList(wrapper, this.currentVoClass());
+    }
+
+    default <P extends IPage<V>> P selectVoPage(IPage<T> page, Wrapper<T> wrapper) {
+        return selectVoPage(page, wrapper, this.currentVoClass());
+    }
+
+    /**
+     * 分页查询VO
+     */
+    default <C, P extends IPage<C>> P selectVoPage(IPage<T> page, Wrapper<T> wrapper, Class<C> voClass) {
+        List<T> list = this.selectList(page, wrapper);
+        IPage<C> voPage = new Page<>(page.getCurrent(), page.getSize(), page.getTotal());
+        if (CollUtil.isEmpty(list)) {
+            return (P) voPage;
+        }
+        voPage.setRecords(MapstructUtils.convert(list, voClass));
+        return (P) voPage;
     }
 }
