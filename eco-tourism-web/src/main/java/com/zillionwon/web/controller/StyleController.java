@@ -83,22 +83,24 @@ public class StyleController {
             if (style.getStyleName().equals(styleName)) {
                 long styleId = style.getStyleId();
                 styleService.deleteStyle(styleId);
-                return R.ok("删除成功");
+                return R.ok();
             }
         }
         return R.fail("风格本身不存在");
     }
 
     /**
-     * 更改风格名字
+     * 更改风格名字 (通过风格ID)
+     * @param styleId 风格ID
+     * @param styleName 风格名称
      */
     @PutMapping
-    public R<String> updateStyleName(@RequestParam Long styleId, String styleName) {
+    public R<Void> updateNameById(@RequestParam Long styleId, String styleName) {
         List<Style> styles = styleService.getAllStyle();
         for (Style style : styles) {
             if (style.getStyleId().equals(styleId)) {
                 styleService.updateStyleName(styleId, styleName);
-                return R.ok("修改成功", styleName);
+                return R.ok();
             }
         }
         return R.fail("风格本身不存在");
