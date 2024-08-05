@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 城市业务层处理
@@ -25,6 +24,18 @@ public class CityService {
 
     @Autowired
     private CityMapper cityMapper;
+
+    /**
+     * 查询事件列表
+     * @param bo 城市业务层对象
+     * @param pageQuery 分页参数
+     * @return 城市列表（分页）
+     */
+    public TableDataInfo<CityVO> queryPageList(City bo, PageQuery pageQuery) {
+        LambdaQueryWrapper<City> lqw = buildQueryWrapper(bo);
+        Page<CityVO> result = cityMapper.selectVoPage(pageQuery.build(), lqw);
+        return TableDataInfo.build(result);
+    }
 
     // 通过城市名搜索城市
     public List<CityVO> getCitiesByCityName(String cityName) {
@@ -54,20 +65,7 @@ public class CityService {
         return cityMapper.selectVoList(lqw);
     }
 
-    /**
-     * 查询事件列表
-     * @param bo 城市业务层对象
-     * @param pageQuery 分页参数
-     * @return 城市列表（分页）
-     */
-    public TableDataInfo<CityVO> queryPageList(City bo, PageQuery pageQuery) {
-        LambdaQueryWrapper<City> lqw = buildQueryWrapper(bo);
-        Page<CityVO> result = cityMapper.selectVoPage(pageQuery.build(), lqw);
-        return TableDataInfo.build(result);
-    }
-
     private LambdaQueryWrapper<City> buildQueryWrapper(City bo) {
-        Map<String, Object> params = bo.getParams();
         LambdaQueryWrapper<City> lqw = Wrappers.lambdaQuery();
         lqw.eq(bo.getCityId() != null, City::getCityId, bo.getCityId());
         lqw.like(StringUtils.isNotBlank(bo.getCityName()), City::getCityName, bo.getCityName());

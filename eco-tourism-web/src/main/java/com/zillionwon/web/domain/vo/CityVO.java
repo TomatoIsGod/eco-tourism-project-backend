@@ -1,39 +1,35 @@
 package com.zillionwon.web.domain.vo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.zillionwon.web.domain.City;
+import com.zillionwon.web.domain.Tag;
+import io.github.linpeilie.annotations.AutoMapper;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.List;
 
 /**
  * 城市视图类
  * @author InwardFlow
  */
+@Data
+@AutoMapper(target = City.class)
+@EqualsAndHashCode(callSuper = false)
 public class CityVO {
+
+    /**
+     * 城市ID
+     */
+    private Long cityId;
+
     /**
      * 城市名
      */
     private String cityName;
-    public String getCityName() {
-        return cityName;
-    }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
+    /**
+     * 标签
+     */
+    private List<Tag> tags;
 
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
-    public void setTags(String... tags) {
-        this.tags.addAll(Arrays.stream(tags).toList());
-    }
-    public void setTags(String tags) {
-        this.tags.add(tags);
-    }
-
-    private List<String> tags = new ArrayList<>();
 }

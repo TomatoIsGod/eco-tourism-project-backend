@@ -1,25 +1,21 @@
 package com.zillionwon.web.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.core.util.StrUtil;
 import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.domain.City;
+import com.zillionwon.web.domain.CityTag;
 import com.zillionwon.web.domain.PageQuery;
 import com.zillionwon.web.domain.TableDataInfo;
 import com.zillionwon.web.domain.vo.CityVO;
 import com.zillionwon.web.service.CityService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.Parameter;
+import com.zillionwon.web.service.CityTagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 城市接口
@@ -27,22 +23,55 @@ import java.util.stream.Stream;
  * @author InwardFlow
  */
 
+@SaIgnore
 @Slf4j
 @RestController
 @RequestMapping("/city")
 @CrossOrigin
 public class CityController {
 
-    private final List<CityVO> cities = getMockCities();
-    private final List<String> tags = getMockTags();
-
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    private CityTagService cityTagService;
+
+    /**
+     * 获取城市列表信息
+     *
+     * @param city 城市
+     * @return 城市列表
+     */
+    @GetMapping
+    public R<List<CityVO>> queryList(City city) {
+        List<CityVO> cities = cityService.queryList(city);
+        if (cities.isEmpty()) {
+            log.info("城市 {} 不存在", city);
+            return R.fail("城市不存在");
+        } else {
+            return R.ok(cities.stream()
+                        .peek(cityVO -> cityVO.setTags(cityTagService.getTagsByCityId(cityVO.getCityId())))
+                        .collect(Collectors.toList()));
+        }
+    }
+
+    /**
+     * 查询城市信息 (分页)
+     *
+     * @param cityBo    城市业务层对象
+     * @param pageQuery 分页
+     * @return 城市列表 (分页对象)
+     */
+    @GetMapping("/list")
+    public TableDataInfo<CityVO> list(City cityBo, PageQuery pageQuery) {
+        return cityService.queryPageList(cityBo, pageQuery);
+    }
+
     /**
      * 查询城市
+     *
      * @param cityName 城市名
-     * @param tagId 标签ID
+     * @param tagId    标签ID
      * @return 城市集合
      */
     @GetMapping("/search")
@@ -61,126 +90,30 @@ public class CityController {
 
     /**
      * 获取一个随机城市
+     *
      * @return 城市信息
      */
     @GetMapping("/random")
     public R<CityVO> getRandomCity() {
         CityVO city = cityService.getRandomCity();
-        return city != null ? R.ok(city) : R.fail("No cities available");
+        return city != null ? R.ok(city) : R.fail("获取随机城市失败");
     }
 
     /**
-     * 获取城市列表
-     * @param cityName 城市名
+     * 获取 City 与 Tag 之间的映射关系
+     *
+     * @param tagId 标签ID
      * @return 城市列表
      */
-    @GetMapping
-    public R<List<CityVO>> getCityList(@RequestParam(required = false) String cityName) {
-        if (!StrUtil.isBlank(cityName)) {
-            return R.ok(cities.stream().filter(o -> o.getCityName().equals(cityName)).collect(Collectors.toList()));
-        }
-        return R.ok(cities);
-    }
-
-    @PostMapping("/list")
-    public ResponseEntity<R<List<CityVO>>> getCityList(@RequestBody(required = false) Map<String, String> filters) {
-        Stream<CityVO> cityStream = cities.stream();
-        if (filters != null && !filters.isEmpty()) {
-            String tagFilter = filters.get("tag");
-            if (StrUtil.isNotBlank(tagFilter)) {
-                cityStream = cityStream.filter(c -> c.getTags().contains(tagFilter));
-            }
-        }
-        List<CityVO> filteredCities = cityStream.collect(Collectors.toList());
-        return ResponseEntity.ok(R.ok("城市列表获取成功", filteredCities));
-    }
-
-    // 添加新的端点: 根据标签ID获取城市列表
-    @GetMapping("/citiesByTag")
-    public ResponseEntity<List<CityVO>> getCitiesByTag(@RequestParam Long tagId) {
-        List<CityVO> cities = cityService.getCitiesByTag(tagId);
-        return ResponseEntity.ok(cities);
-    }
-
-    protected static List<CityVO> getMockCities() {
-        List<CityVO> lstCities = new ArrayList<>();
-        CityVO city = new CityVO();
-        city.setCityName("苏州");
-        city.setTags("江南水乡");
-        lstCities.add(city);
-
-        city = new CityVO();
-        city.setCityName("南京");
-        city.setTags("江南水乡", "古都名城");
-        lstCities.add(city);
-
-        city = new CityVO();
-        city.setCityName("杭州");
-        city.setTags("江南水乡", "古都名城");
-        lstCities.add(city);
-
-        city = new CityVO();
-        city.setCityName("乌镇");
-        city.setTags("江南水乡");
-        lstCities.add(city);
-
-        city = new CityVO();
-        city.setCityName("西安");
-        city.setTags("古都名城");
-        lstCities.add(city);
-
-        city = new CityVO();
-        city.setCityName("北京");
-        city.setTags("古都名城");
-        lstCities.add(city);
-
-        city = new CityVO();
-        city.setCityName("桂林");
-        city.setTags("自然风光");
-        lstCities.add(city);
-
-        city = new CityVO();
-        city.setCityName("三亚");
-        city.setTags("自然风光");
-        lstCities.add(city);
-
-        city = new CityVO();
-        city.setCityName("昆明");
-        city.setTags("自然风光");
-        lstCities.add(city);
-        return lstCities;
-    }
-
-    private static List<String> getMockTags() {
-        return List.of(new String[]{"江南水乡", "古都名城"});
-    }
-
-    /**
-     * 通过输入城市ID，搜索相关城市
-     *
-     * @param cityId 城市ID
-     * @return 城市信息
-     */
-    @ApiOperation("通过ID获取城市")
-    @GetMapping("/{cityId}")
-    public R<CityVO> getCityById(@Parameter(name = "城市ID") @PathVariable Long cityId) {
-        return R.ok(Objects.requireNonNull(cities.get(Math.toIntExact(cityId))));
-    }
-
-    /**
-     * 查询城市信息 (分页)
-     *
-     * @param cityBo 城市业务层对象
-     * @param pageQuery 分页
-     * @return 城市列表 (分页对象)
-     */
-    @GetMapping("/list")
-    public TableDataInfo<CityVO> list(City cityBo, PageQuery pageQuery) {
-        return cityService.queryPageList(cityBo, pageQuery);
+    @Deprecated
+    @GetMapping("/queryCityTag")
+    public R<List<CityTag>> getCitiesByTag(@RequestParam Long tagId, @RequestParam Long cityId) {
+        return R.ok(cityTagService.getCityTags(new CityTag(tagId, cityId)));
     }
 
     /**
      * 查询城市信息 (不分页)
+     *
      * @param cityBo 城市业务层对象
      * @return 城市列表
      */
