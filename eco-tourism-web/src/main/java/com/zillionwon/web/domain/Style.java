@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  *
  *
  */
+
 @TableName("style")
 public class Style {
     private long StyleId;
@@ -29,4 +30,6 @@ public class Style {
         this.StyleName = StyleName;
     }
 }
+
+
 

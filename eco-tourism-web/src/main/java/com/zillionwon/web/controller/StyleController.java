@@ -29,6 +29,7 @@ public class StyleController {
 
     /**
      * 通过 ID 获取旅行风格
+     *
      * @param styleId 风格ID
      * @return 旅行风格
      */
@@ -44,6 +45,7 @@ public class StyleController {
 
     /**
      * 通过名称获取旅行风格
+     *
      * @param styleName 旅行风格名称
      * @return 旅行风格
      */
@@ -91,7 +93,8 @@ public class StyleController {
 
     /**
      * 更改风格名字 (通过风格ID)
-     * @param styleId 风格ID
+     *
+     * @param styleId   风格ID
      * @param styleName 风格名称
      */
     @PutMapping
@@ -104,5 +107,20 @@ public class StyleController {
             }
         }
         return R.fail("风格本身不存在");
+    }
+
+    /**
+     * 获取所有旅行风格分类
+     *
+     * @return 所有旅行风格
+     */
+    @GetMapping("/getTourStyles")
+    public R<List<Style>> getTourStyles() {
+        try {
+            return R.ok(Objects.requireNonNull(styleService.getAllStyle()));
+        } catch (NullPointerException e) {
+//            log.info("styleId 为 {} 的旅行风格不存在", styleId);
+            return R.fail("未找到该旅行风格");
+        }
     }
 }
