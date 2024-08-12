@@ -1,5 +1,6 @@
 package com.zillionwon.web.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.domain.*;
@@ -67,7 +68,9 @@ public class CityController {
      */
     @GetMapping("/list")
     public TableDataInfo<CityVO> list(City cityBo, PageQuery pageQuery) {
-        return cityService.queryPageList(cityBo, pageQuery);
+        var list = cityService.queryPageList(cityBo, pageQuery).getRows();
+        return TableDataInfo.build(list.stream().peek(cityVO -> cityVO.setTags(cityTagService.getTagsByCityId(cityVO.getCityId())))
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -108,20 +111,19 @@ public class CityController {
         List<Tag> lstCityStyle = new ArrayList<>();
 
         String sql = "select tag_id,tag_name from tag where isopen=1";
-        List query = jdbcTemplate.queryForList(sql);
-        if (query == null || query.size() == 0) {
+        List<Map<String, Object>> query = jdbcTemplate.queryForList(sql);
+        if (ObjectUtil.isEmpty(query)) {
             return lstCityStyle;
         }
-
         for (Object value : query) {
             Map q = (Map) value;
             if (q != null) {
 
-                String tag_name = q.get("tag_name") != null ? (String) q.get("tag_name") : "";
+                String tagName = q.get("tag_name") != null ? (String) q.get("tag_name") : "";
 
                 Tag tag = new Tag();
                 tag.setTagId((long) q.get("tag_id"));
-                tag.setTagName(tag_name);
+                tag.setTagName(tagName);
                 lstCityStyle.add(tag);
             }
         }
