@@ -82,6 +82,7 @@ public class StyleController {
 
     /**
      * 删除风格
+     * @param styleName 风格名称
      */
     @DeleteMapping
     public R<Style> deleteByName(@RequestParam String styleName) {

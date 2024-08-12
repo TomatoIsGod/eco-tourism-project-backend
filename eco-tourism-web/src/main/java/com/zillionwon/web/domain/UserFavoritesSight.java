@@ -9,10 +9,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
  *
  */
 @TableName("user_favorites")
-public class UserFavorites {
+public class UserFavoritesSight {
     @TableId
     private Long userId;
-    private String favoriteContent;
+    private String favoriteSight;
 
     // getters and setters
     public Long getUserId() {
@@ -23,11 +23,11 @@ public class UserFavorites {
         this.userId = userId;
     }
 
-    public String getFavoriteContent() {
-        return favoriteContent;
+    public String getFavoriteSight() {
+        return favoriteSight;
     }
 
     public void setFavoriteContent(String favoriteContent) {
-        this.favoriteContent = favoriteContent;
+        this.favoriteSight = favoriteSight;
     }
 }

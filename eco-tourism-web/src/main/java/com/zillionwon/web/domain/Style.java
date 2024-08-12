@@ -8,8 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
  *
  */
 
-@TableName("style")
+@TableName("tour_style")
 public class Style {
+
     private long StyleId;
     private String StyleName;
 
