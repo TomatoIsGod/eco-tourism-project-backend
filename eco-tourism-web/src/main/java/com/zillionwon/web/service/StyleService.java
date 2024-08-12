@@ -2,7 +2,6 @@ package com.zillionwon.web.service;
 
 import com.zillionwon.web.domain.Style;
 import com.zillionwon.web.mapper.StyleMapper;
-import com.zillionwon.web.mapper.UserFavoritesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,8 +46,7 @@ public class StyleService {
      * @param styleName 风格名称
      */
     public void addStyle(String styleName) {
-        long styleId = StyleMapper.findAll().size() + 1;
-        StyleMapper.insert(styleId, styleName);
+        StyleMapper.insert(styleName);
     }
 
     /**

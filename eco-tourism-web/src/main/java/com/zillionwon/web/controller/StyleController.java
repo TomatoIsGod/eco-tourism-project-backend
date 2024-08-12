@@ -18,7 +18,7 @@ import java.util.Objects;
 
 @Slf4j
 @RestController
-@RequestMapping("/style")
+@RequestMapping("/tourstyle")
 public class StyleController {
     private final StyleService styleService;
 
@@ -77,6 +77,7 @@ public class StyleController {
 
     /**
      * 删除风格
+     * @param styleName 风格名称
      */
     @DeleteMapping
     public R<Style> deleteByName(@RequestParam String styleName) {
