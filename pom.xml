@@ -203,7 +203,7 @@
 
     <modules>
         <module>eco-common</module>
-        <module>eco-tourism-spider</module>
+<!--        <module>eco-tourism-spider</module>-->
         <module>eco-tourism-web</module>
     </modules>
 
@@ -255,6 +255,16 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <!-- 其他配置选项，比如标签格式、分支策略等 -->
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 </project>

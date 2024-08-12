@@ -1,5 +1,4 @@
 package com.zillionwon.web.domain.dto;
-import java.math.BigDecimal;
 
 /**
  * 旅行路书点击进任一景区详情界面数据
@@ -7,10 +6,10 @@ import java.math.BigDecimal;
 public class SightDetailDTO {
     private String name;
     private String rankTag;
-    private BigDecimal score;
+    private double score;
     private String openTime;
     private String closeTime;
-    private BigDecimal price;
+    private double price;
     private String address;
     private String description;
     //ui里“单独景点展开”页面中增加的参数内容
@@ -37,11 +36,11 @@ public class SightDetailDTO {
         this.rankTag = rankTag;
     }
 
-    public BigDecimal getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(BigDecimal score) {
+    public void setScore(double score) {
         this.score = score;
     }
 
@@ -61,11 +60,11 @@ public class SightDetailDTO {
         this.closeTime = closeTime;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

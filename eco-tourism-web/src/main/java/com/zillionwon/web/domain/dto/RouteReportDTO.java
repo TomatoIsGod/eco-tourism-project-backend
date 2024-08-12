@@ -1,6 +1,5 @@
 package com.zillionwon.web.domain.dto;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -72,12 +71,15 @@ public class RouteReportDTO {
     public static class SightDetail {
         private String name;
         private String rankTag;
-        private BigDecimal score;
+        private double score;
         private String openTime;
         private String closeTime;
-        private BigDecimal price;
+        private double price;
         private String address;
         private String description;
+        private String summary;
+        private String cover_img_url;
+        private long sight_id;
 
         // Getters and setters
 
@@ -97,11 +99,11 @@ public class RouteReportDTO {
             this.rankTag = rankTag;
         }
 
-        public BigDecimal getScore() {
+        public double getScore() {
             return score;
         }
 
-        public void setScore(BigDecimal score) {
+        public void setScore(double score) {
             this.score = score;
         }
 
@@ -121,11 +123,11 @@ public class RouteReportDTO {
             this.closeTime = closeTime;
         }
 
-        public BigDecimal getPrice() {
+        public double getPrice() {
             return price;
         }
 
-        public void setPrice(BigDecimal price) {
+        public void setPrice(double price) {
             this.price = price;
         }
 
@@ -143,6 +145,26 @@ public class RouteReportDTO {
 
         public void setDescription(String description) {
             this.description = description;
+        }
+
+        public String getSummary() {
+            return this.summary;
+        }
+        public void setSummary(String summary) {
+            this.summary = summary;
+        }
+        public String getCoverImgUrl() {
+            return this.cover_img_url;
+        }
+        public void setCoverImgUrl(String cover_img_url) {
+            this.cover_img_url = cover_img_url;
+        }
+        public long getSightId() {
+            return sight_id;
+        }
+
+        public void setSightId(int sight_id) {
+            this.sight_id = sight_id;
         }
     }
 }

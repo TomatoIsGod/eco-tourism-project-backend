@@ -87,7 +87,7 @@ public class CityDetailDTO {
     public static class SightInfo {
         private String name;
         private String rankTag;
-        private String score;
+        private double score;
         private String address;
         private String description;
 
@@ -108,11 +108,11 @@ public class CityDetailDTO {
             this.rankTag = rankTag;
         }
 
-        public String getScore() {
+        public double getScore() {
             return score;
         }
 
-        public void setScore(String score) {
+        public void setScore(double score) {
             this.score = score;
         }
 

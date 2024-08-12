@@ -18,14 +18,12 @@ import lombok.Data;
 public class CityTag {
 
     /**
-     * 城市ID
-     */
-    @TableId(type = IdType.INPUT)
-    private Long cityId;
-
-    /**
      * 标签ID
      */
+    @TableId(type = IdType.INPUT)
     private Long tagId;
+
+
+    private Long cityId;
 
 }

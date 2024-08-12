@@ -3,7 +3,6 @@ package com.zillionwon.web.domain;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +56,8 @@ public class SightOverview extends BaseEntity {
      */
     private String closeTime;
 
+    private String openTime;
+
     public String getDistanceFromCity() {
         return distanceFromCity;
     }
@@ -76,7 +77,9 @@ public class SightOverview extends BaseEntity {
     /**
      * 缩略图地址 220x140
      */
-    private URL coverImgUrl;
+    private String coverImgUrl;
+
+    private String dis;
 
     public String getName() {
         return name;
@@ -118,7 +121,7 @@ public class SightOverview extends BaseEntity {
         this.heat = heat;
     }
 
-    public Double getScore() {
+    public double getScore() {
         return score;
     }
 
@@ -150,11 +153,11 @@ public class SightOverview extends BaseEntity {
         this.price = price;
     }
 
-    public URL getCoverImgUrl() {
+    public String getCoverImgUrl() {
         return coverImgUrl;
     }
 
-    public void setCoverImgUrl(URL coverImgUrl) {
+    public void setCoverImgUrl(String coverImgUrl) {
         this.coverImgUrl = coverImgUrl;
     }
 
@@ -188,7 +191,7 @@ public class SightOverview extends BaseEntity {
         private String address;
         private String distanceFromCity;
         private Double price;
-        private URL smallImageUrl;
+        private String smallImageUrl;
         private String closeTime;
 
         public Builder name(String name) {
@@ -241,7 +244,7 @@ public class SightOverview extends BaseEntity {
             return this;
         }
 
-        public Builder smallImageUrl(URL smallImageUrl) {
+        public Builder smallImageUrl(String smallImageUrl) {
             this.smallImageUrl = smallImageUrl;
             return this;
         }
@@ -272,5 +275,9 @@ public class SightOverview extends BaseEntity {
         this.price = builder.price;
         this.coverImgUrl = builder.smallImageUrl;
         this.closeTime = builder.closeTime;
+    }
+
+    public String getOpenTime() {
+        return openTime;
     }
 }

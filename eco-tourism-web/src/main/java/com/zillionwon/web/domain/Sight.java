@@ -18,11 +18,11 @@ public class Sight {
     private String rankTag;
     private String tagsId;
     private BigDecimal heat;
-    private BigDecimal score;
+    private double score;
     private String raterCount;
     private String address;
     private String distanceFromCity;
-    private BigDecimal price;
+    private double price;
     private String coverImgUrl;
     private String openTime;
     private String closeTime;
@@ -94,11 +94,11 @@ public class Sight {
         this.heat = heat;
     }
 
-    public BigDecimal getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(BigDecimal score) {
+    public void setScore(double score) {
         this.score = score;
     }
 
@@ -126,11 +126,11 @@ public class Sight {
         this.distanceFromCity = distanceFromCity;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

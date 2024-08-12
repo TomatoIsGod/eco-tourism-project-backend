@@ -1,9 +1,11 @@
 package com.zillionwon.web.service;
+import com.zillionwon.web.domain.SightOverview;
 import com.zillionwon.web.domain.dto.CityDetailDTO;
 import com.zillionwon.web.domain.dto.RouteReportDTO;
 import com.zillionwon.web.domain.dto.SightDetailDTO;
 import com.zillionwon.web.domain.Sight;
 import com.zillionwon.web.mapper.SightMapper;
+import com.zillionwon.web.mapper.SightOverviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,39 +18,58 @@ public class SightService {
 
     @Autowired
     private SightMapper sightMapper;
+    @Autowired
+    private SightOverviewMapper sightOverviewMapper;
 
     /**
      * 旅行路书详情service
      * @param city
      * @return
      */
-    public RouteReportDTO getRouteReportData(String city) {
-        List<Sight> sights = sightMapper.selectByCity(city);
+    public RouteReportDTO getRouteReportData(String city, int days) {
 
         RouteReportDTO routeReport = new RouteReportDTO();
         routeReport.setCity(city);
-        routeReport.setDays(2);
+        routeReport.setDays(days);
+
+        List<RouteReportDTO.SightDetail> sightDetail = sightMapper.selectSightDetailByCity(city);
+
+        List<SightOverview> sightOverviews = sightOverviewMapper.selectByCity(city);
+
+//        List<SightOverview> _sightOverviews = sightOverviews.stream().filter(o->sightDetail.stream().anyMatch(s->s.getSightId()==o.getSightId() && s.getSummary() != null)).collect(Collectors.toList());
+////        if(sightDetail.size()>0 && _sightOverviews.size()==0){
+////            return routeReport;
+////        }
 
         List<RouteReportDTO.DayDetail> dayDetails = new ArrayList<>();
 
-        for (int day = 1; day <= 2; day++) {
+        for (int day = 1; day <= days; day++) {
             RouteReportDTO.DayDetail dayDetail = new RouteReportDTO.DayDetail();
+
             dayDetail.setSuggestedPlayTime("8小时"); // 示例数据
             dayDetail.setRouteOverview(null); // 先设置为null
 
             List<RouteReportDTO.SightDetail> sightDetails = new ArrayList<>();
-            for (Sight sight : sights) {
-                RouteReportDTO.SightDetail sightDetail = new RouteReportDTO.SightDetail();
-                sightDetail.setName(sight.getName());
-                sightDetail.setRankTag(sight.getRankTag());
-                sightDetail.setScore(sight.getScore());
-                sightDetail.setOpenTime(sight.getOpenTime());
-                sightDetail.setCloseTime(sight.getCloseTime());
-                sightDetail.setPrice(sight.getPrice());
-                sightDetail.setAddress(sight.getAddress());
-                sightDetail.setDescription(sight.getDescription());
 
-                sightDetails.add(sightDetail);
+            for (int i = (day - 1) * 3; i <= (day * 3 - 1); i++) {
+                RouteReportDTO.SightDetail _sightDetail = new RouteReportDTO.SightDetail();
+
+                //获得景点详情
+                SightOverview sight = sightOverviews.get(i);
+
+                _sightDetail.setName(sight.getName());
+                _sightDetail.setRankTag(sight.getRankTag());
+                _sightDetail.setScore(sight.getScore());
+                _sightDetail.setOpenTime(sight.getOpenTime());
+                _sightDetail.setCloseTime(sight.getCloseTime());
+                _sightDetail.setPrice(sight.getPrice()!=null? sight.getPrice(): 0);
+                _sightDetail.setAddress(sight.getAddress());
+                if(sightDetail.stream().anyMatch(o->o.getSightId()==sight.getSightId())) {
+                    _sightDetail.setSummary(sightDetail.stream().filter(o->o.getSightId()==sight.getSightId()).findFirst().get().getSummary());
+                }
+                _sightDetail.setCoverImgUrl(sight.getCoverImgUrl());
+
+                sightDetails.add(_sightDetail);
             }
 
             dayDetail.setSights(sightDetails);
@@ -142,7 +163,7 @@ public class SightService {
             CityDetailDTO.SightInfo sightInfo = new CityDetailDTO.SightInfo();
             sightInfo.setName(sight.getName());
             sightInfo.setRankTag(sight.getRankTag());
-            sightInfo.setScore(sight.getScore().toString());
+            sightInfo.setScore(sight.getScore());
             sightInfo.setAddress(sight.getAddress());
             sightInfo.setDescription(sight.getDescription());
             return sightInfo;

@@ -3,8 +3,10 @@ package com.zillionwon.web.controller;
 import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.domain.Style;
 import com.zillionwon.web.service.*;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +20,12 @@ import java.util.Objects;
 
 @Slf4j
 @RestController
-@RequestMapping("/style")
+@RequestMapping("/tourstyle")
 public class StyleController {
     private final StyleService styleService;
+    @Autowired
+    @Resource(name = "jdbcTemplate")
+    public JdbcTemplate jdbcTemplate;
 
     @Autowired
     public StyleController(StyleService styleService) {
@@ -123,4 +128,5 @@ public class StyleController {
             return R.fail("未找到该旅行风格");
         }
     }
+
 }

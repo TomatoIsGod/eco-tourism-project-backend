@@ -1,14 +1,16 @@
 package com.zillionwon.web.controller;
 
-import com.zillionwon.common.core.domain.R;
-import com.zillionwon.web.domain.vo.CityVO;
 import io.swagger.annotations.Api;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,13 +22,32 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/webapi/mp/category")
+@RequestMapping("/tag")
 @CrossOrigin
 @Api(tags = "城市分类接口服务")
 public class TagController {
-    @GetMapping("/all")
-    public R<Map<String, List<CityVO>>> getAll() {
-        return null;
-    }
+    @Autowired
+    @Resource(name = "jdbcTemplate")
+    public JdbcTemplate jdbcTemplate;
 
+    @GetMapping("/getTags")
+    public List<String> getTags(){
+        List<String> lstTag = new ArrayList<>();
+
+        String sql = "select tag_name from tag";
+        List query = jdbcTemplate.queryForList(sql);
+        if (query == null || query.isEmpty()) {
+            return lstTag;
+        }
+
+        for (Object value : query) {
+            Map q = (Map)value;
+            if (q != null) {
+                String tag = q.get("tag_name") != null ? (String) q.get("tag_name") : "";
+                lstTag.add(tag);
+            }
+        }
+
+        return lstTag;
+    }
 }

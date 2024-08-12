@@ -28,15 +28,15 @@ public class PlanController {
      * @return 路线报告
      */
     @GetMapping("/getRouteReportData")
-    public RouteReportDTO getRouteReportData(@RequestParam String city) {
-        return sightService.getRouteReportData(city);
+    public RouteReportDTO getRouteReportData(@RequestParam String city, int days) {
+        return sightService.getRouteReportData(city, days);
     }
 
     /**
      * 城市详情数据：点击“第1天/第2天...”
      * @param city 城市名称
      * @param day 索引 (第 n 天)
-     * @return
+     * @return 单天的旅行计划
      */
     @GetMapping("/getDayDetail")
     public RouteReportDTO.DayDetail getDayDetail(@RequestParam String city, @RequestParam int day) {
