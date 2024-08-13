@@ -42,6 +42,7 @@
         <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
         <knife4j.version>4.4.0</knife4j.version>
         <satoken.version>1.37.0</satoken.version>
+        <langchain4j.version>0.33.0</langchain4j.version>
     </properties>
 
     <dependencyManagement>
@@ -198,6 +199,11 @@
                 <version>${satoken.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j</artifactId>
+                <version>${langchain4j.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
