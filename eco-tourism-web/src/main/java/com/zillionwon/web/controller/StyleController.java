@@ -1,12 +1,12 @@
 package com.zillionwon.web.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
+import com.zillionwon.common.core.controller.BaseController;
 import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.domain.Style;
-import com.zillionwon.web.service.*;
-import jakarta.annotation.Resource;
+import com.zillionwon.web.service.StyleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +20,10 @@ import java.util.Objects;
 
 @Slf4j
 @RestController
-@RequestMapping("/tourstyle")
-public class StyleController {
+@RequestMapping("/tourStyle")
+public class StyleController extends BaseController {
+
     private final StyleService styleService;
-    @Autowired
-    @Resource(name = "jdbcTemplate")
-    public JdbcTemplate jdbcTemplate;
 
     @Autowired
     public StyleController(StyleService styleService) {
@@ -66,18 +64,19 @@ public class StyleController {
 
     /**
      * 添加新的风格
+     * @param styleName 风格名称
+     * @return 是否成功
      */
+    @SaCheckRole("admin")
     @PostMapping
-    public R<Style> addByName(@RequestParam String styleName) {
+    public R<Void> addByName(@RequestParam String styleName) {
         List<Style> styles = styleService.getAllStyle();
         for (Style style : styles) {
             if (style.getStyleName().equals(styleName)) {
                 return R.fail("风格已存在");
             }
         }
-        styleService.addStyle(styleName);
-        Style newStyle = styleService.searchStyleByName(styleName);
-        return R.ok("添加成功", newStyle);
+        return toAjax(styleService.addStyle(styleName));
     }
 
     /**

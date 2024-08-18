@@ -1,9 +1,11 @@
 package com.zillionwon.web.controller;
 
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.zillionwon.common.core.domain.R;
-import com.zillionwon.web.domain.*;
+import com.zillionwon.web.domain.City;
+import com.zillionwon.web.domain.CityTag;
+import com.zillionwon.web.domain.PageQuery;
+import com.zillionwon.web.domain.TableDataInfo;
 import com.zillionwon.web.domain.vo.CityVO;
 import com.zillionwon.web.service.CityService;
 import com.zillionwon.web.service.CityTagService;
@@ -40,7 +42,7 @@ public class CityController {
     private CityTagService cityTagService;
 
     /**
-     * 获取城市列表信息
+     * 查询城市信息 (不分页)
      *
      * @param city 城市
      * @return 城市列表
@@ -93,42 +95,14 @@ public class CityController {
      * 获取 City 与 Tag 之间的映射关系
      *
      * @param tagId 标签ID
+     * @param cityId 城市ID
      * @return 城市列表
      */
+
     @GetMapping("/queryCityTag")
     public R<List<CityTag>> getCitiesByTag(@RequestParam(required = false) Long tagId,
                                            @RequestParam(required = false) Long cityId) {
         return R.ok(cityTagService.getCityTags(new CityTag(tagId, cityId)));
-    }
-
-    /**
-     * 获取城市分类
-     *
-     * @return 标签列表
-     */
-    @GetMapping("/getCityCategories")
-    public List<Tag> getCityCategories() {
-        List<Tag> lstCityStyle = new ArrayList<>();
-
-        String sql = "select tag_id,tag_name from tag where isopen=1";
-        List<Map<String, Object>> query = jdbcTemplate.queryForList(sql);
-        if (ObjectUtil.isEmpty(query)) {
-            return lstCityStyle;
-        }
-        for (Object value : query) {
-            Map q = (Map) value;
-            if (q != null) {
-
-                String tagName = q.get("tag_name") != null ? (String) q.get("tag_name") : "";
-
-                Tag tag = new Tag();
-                tag.setTagId((long) q.get("tag_id"));
-                tag.setTagName(tagName);
-                lstCityStyle.add(tag);
-            }
-        }
-
-        return lstCityStyle;
     }
 
     /**
@@ -138,10 +112,11 @@ public class CityController {
      * @param pageIndex   当前页码
      * @param categoryIds 城市分类Ids（例如：1,3,4）
      * @param cityName    城市名称（模糊查询）
-     * @return
+     * @return 城市列表
+     * @deprecated
      */
     @Deprecated
-    @GetMapping("/getCities")
+    // @GetMapping("/getCities")
     public List<CityVO> getCities(@RequestParam(required = false, defaultValue = "10") int pageSize, @RequestParam(required = false, defaultValue = "1") int pageIndex, @RequestParam(required = false) String categoryIds, @RequestParam(required = false) String cityName) {
         List<CityVO> lstCities = new ArrayList<>();
         String sql =

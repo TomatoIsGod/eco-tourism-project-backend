@@ -25,4 +25,5 @@ public class GuideController {
     public CityDetailDTO getCityDetail(@RequestParam String cityName) {
         return sightService.getCityDetail(cityName);
     }
+
 }

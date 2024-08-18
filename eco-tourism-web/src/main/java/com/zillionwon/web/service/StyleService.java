@@ -8,16 +8,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * 旅游风格
+ *
+ * @author black
+ */
+
 @Service
 public class StyleService {
     @Autowired
-    private StyleMapper StyleMapper;
+    private StyleMapper styleMapper;
 
     /**
      * @return 返回所有风格
      */
     public List<Style> getAllStyle() {
-        return StyleMapper.findAll();
+        return styleMapper.findAll();
     }
 
     /**
@@ -27,7 +33,7 @@ public class StyleService {
      * @return 返回对应风格
      */
     public Style getStyleById(Long styleId) {
-        return StyleMapper.findByStyleId(styleId);
+        return styleMapper.findByStyleId(styleId);
     }
 
     /**
@@ -37,7 +43,7 @@ public class StyleService {
      * @return 返回对应风格
      */
     public Style searchStyleByName(String styleName) {
-        return StyleMapper.findByStyleName(styleName);
+        return styleMapper.findByStyleName(styleName);
     }
 
     /**
@@ -45,8 +51,8 @@ public class StyleService {
      *
      * @param styleName 风格名称
      */
-    public void addStyle(String styleName) {
-        StyleMapper.insert(styleName);
+    public int addStyle(String styleName) {
+        return styleMapper.insert(styleName);
     }
 
     /**
@@ -55,7 +61,7 @@ public class StyleService {
      * @param styleId 风格ID
      */
     public void deleteStyle(@RequestParam Long styleId) {
-        StyleMapper.delete(styleId);
+        styleMapper.delete(styleId);
     }
 
     /**
@@ -63,7 +69,7 @@ public class StyleService {
      */
 
     public void updateStyleName(Long styleId, String styleName) {
-        StyleMapper.updateStyleName(styleId, styleName);
+        styleMapper.updateStyleName(styleId, styleName);
     }
 
 }

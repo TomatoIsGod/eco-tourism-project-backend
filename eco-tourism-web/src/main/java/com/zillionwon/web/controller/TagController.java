@@ -1,14 +1,11 @@
 package com.zillionwon.web.controller;
 
+import com.zillionwon.web.domain.Tag;
 import io.swagger.annotations.Api;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,28 +23,46 @@ import java.util.Map;
 @CrossOrigin
 @Api(tags = "城市分类接口服务")
 public class TagController {
-    @Autowired
+
     @Resource(name = "jdbcTemplate")
     public JdbcTemplate jdbcTemplate;
 
-    @GetMapping("/getTags")
-    public List<String> getTags(){
-        List<String> lstTag = new ArrayList<>();
+    /**
+     * 获取标签列表
+     *
+     * @param tagId     标签ID（可选）
+     * @param tagName   标签名称（可选）
+     * @return          符合条件的标签列表
+     */
+    @GetMapping
+    public List<Tag> getCityTags(@RequestParam(required = false) Long tagId,
+                                 @RequestParam(required = false) String tagName) {
+        List<Tag> cityTags = new ArrayList<>();
 
-        String sql = "select tag_name from tag";
-        List query = jdbcTemplate.queryForList(sql);
-        if (query == null || query.isEmpty()) {
-            return lstTag;
+        // 构建SQL查询语句
+        String sql = "SELECT tag_id, tag_name FROM tag WHERE isopen = 1";
+        List<Object> parameters = new ArrayList<>();
+        if (tagId != null) {
+            sql += " AND tag_id = ?";
+            parameters.add(tagId);
+        }
+        if (tagName != null) {
+            sql += " AND tag_name LIKE ?";
+            parameters.add("%" + tagName + "%");
         }
 
-        for (Object value : query) {
-            Map q = (Map)value;
-            if (q != null) {
-                String tag = q.get("tag_name") != null ? (String) q.get("tag_name") : "";
-                lstTag.add(tag);
-            }
+        // 执行参数化查询
+        List<Map<String, Object>> queryResults = jdbcTemplate.queryForList(sql, parameters.toArray());
+
+        // 处理查询结果
+        for (Map<String, Object> row : queryResults) {
+            Tag tag = new Tag();
+            tag.setTagId((Long) row.get("tag_id"));
+            tag.setTagName((String) row.get("tag_name"));
+            cityTags.add(tag);
         }
 
-        return lstTag;
+        return cityTags;
     }
+
 }

@@ -10,8 +10,16 @@ import com.baomidou.mybatisplus.annotation.TableName;
  */
 @TableName("city")
 public class City extends BaseEntity {
+
+    /**
+     * 城市ID
+     */
     @TableId
     private Long cityId;
+
+    /**
+     * 城市名称
+     */
     private String cityName;
 
     public Long getCityId() {
