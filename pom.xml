@@ -43,6 +43,7 @@
         <knife4j.version>4.4.0</knife4j.version>
         <satoken.version>1.37.0</satoken.version>
         <langchain4j.version>0.33.0</langchain4j.version>
+        <jedis.version>5.0.0</jedis.version>
     </properties>
 
     <dependencyManagement>
@@ -199,11 +200,25 @@
                 <version>${satoken.version}</version>
             </dependency>
 
+            <!-- LangChain4j -->
             <dependency>
                 <groupId>dev.langchain4j</groupId>
                 <artifactId>langchain4j</artifactId>
                 <version>${langchain4j.version}</version>
             </dependency>
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-zhipu-ai</artifactId>
+                <version>${langchain4j.version}</version>
+            </dependency>
+
+            <!-- Jedis -->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

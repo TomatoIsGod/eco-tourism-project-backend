@@ -1,5 +1,7 @@
 package com.zillionwon.web.exception;
 
+import com.zillionwon.common.core.exception.BaseException;
+
 /**
  * 微信小程序 api 错误类
  *

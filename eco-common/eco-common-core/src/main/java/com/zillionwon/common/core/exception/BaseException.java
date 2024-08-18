@@ -1,4 +1,4 @@
-package com.zillionwon.web.exception;
+package com.zillionwon.common.core.exception;
 
 import lombok.EqualsAndHashCode;
 

@@ -47,6 +47,14 @@ spring:
     url: jdbc:mysql://47.113.192.168:3306/ecotour?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&max_allowed_packet=1073741824&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
     username: ecotour
     password: ecotour!123
+  data:
+    redis:
+      host: 47.101.220.93
+      port: 16379
+      password: ecotour!123
+      timeout: 1s
+      database: 0
+
 
 # Logger Config
 logging:

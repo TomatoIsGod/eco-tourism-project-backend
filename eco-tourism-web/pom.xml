@@ -52,6 +52,13 @@
             <version>${revision}</version>
         </dependency>
 
+        <!-- eco-common -->
+        <dependency>
+            <groupId>com.zillionwon</groupId>
+            <artifactId>eco-common-langchain</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.zillionwon</groupId>
             <artifactId>eco-common-satoken</artifactId>

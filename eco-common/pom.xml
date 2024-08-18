@@ -23,6 +23,8 @@
         <module>eco-common-doc</module>
         <module>eco-common-core</module>
         <module>eco-common-satoken</module>
+        <module>eco-common-langchain</module>
+        <module>eco-common-jedis</module>
     </modules>
 
 <!--    <properties>-->
