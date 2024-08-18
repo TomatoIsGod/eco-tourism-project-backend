@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/plan")
 public class PlanController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class PlanController {
      * @param city 城市名称
      * @return 路线报告
      */
-    @GetMapping("/getRouteReportData")
+    @GetMapping("/report")
     public RouteReportDTO getRouteReportData(@RequestParam String city, int days) {
         return sightService.getRouteReportData(city, days);
     }
@@ -38,7 +38,7 @@ public class PlanController {
      * @param day 索引 (第 n 天)
      * @return 单天的旅行计划
      */
-    @GetMapping("/getDayDetail")
+    @GetMapping("/city")
     public RouteReportDTO.DayDetail getDayDetail(@RequestParam String city, @RequestParam int day) {
         return sightService.getDayDetail(city, day);
     }
@@ -46,9 +46,9 @@ public class PlanController {
     /**
      * 景区详情数据
      * @param sightId 景点ID
-     * @return
+     * @return 景区详情数据
      */
-    @GetMapping("/getSightDetail")
+    @GetMapping("/sight")
     public SightDetailDTO getSightDetail(@RequestParam Long sightId) {
         return sightService.getSightDetail(sightId);
     }

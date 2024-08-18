@@ -36,7 +36,7 @@ public class StyleController extends BaseController {
      * @param styleId 风格ID
      * @return 旅行风格
      */
-    @GetMapping("/findById/{styleId}")
+    @GetMapping("/id/{styleId}")
     public R<Style> findById(@PathVariable Long styleId) {
         try {
             return R.ok(Objects.requireNonNull(styleService.getStyleById(styleId)));
@@ -52,7 +52,7 @@ public class StyleController extends BaseController {
      * @param styleName 旅行风格名称
      * @return 旅行风格
      */
-    @GetMapping("/findByName/{styleName}")
+    @GetMapping("/name/{styleName}")
     public R<Style> findByName(@PathVariable String styleName) {
         try {
             return R.ok(Objects.requireNonNull(styleService.searchStyleByName(styleName)));
@@ -83,6 +83,7 @@ public class StyleController extends BaseController {
      * 删除风格
      * @param styleName 风格名称
      */
+    @SaCheckRole("admin")
     @DeleteMapping
     public R<Style> deleteByName(@RequestParam String styleName) {
         List<Style> styles = styleService.getAllStyle();
@@ -102,6 +103,7 @@ public class StyleController extends BaseController {
      * @param styleId   风格ID
      * @param styleName 风格名称
      */
+    @SaCheckRole("admin")
     @PutMapping
     public R<Void> updateNameById(@RequestParam Long styleId, String styleName) {
         List<Style> styles = styleService.getAllStyle();
@@ -119,12 +121,11 @@ public class StyleController extends BaseController {
      *
      * @return 所有旅行风格
      */
-    @GetMapping("/getTourStyles")
+    @GetMapping("/list")
     public R<List<Style>> getTourStyles() {
         try {
             return R.ok(Objects.requireNonNull(styleService.getAllStyle()));
         } catch (NullPointerException e) {
-//            log.info("styleId 为 {} 的旅行风格不存在", styleId);
             return R.fail("未找到该旅行风格");
         }
     }
