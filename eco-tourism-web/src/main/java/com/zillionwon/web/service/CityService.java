@@ -37,6 +37,10 @@ public class CityService {
         return TableDataInfo.build(result);
     }
 
+    public List<CityVO> getCitiesByCondition(Long cityId, String cityName, Long tagId, String tagName) {
+        return cityMapper.selectCitiesByCondition(cityId, cityName, tagId, tagName);
+    }
+
     // 通过城市名搜索城市
     public List<CityVO> getCitiesByCityName(String cityName) {
         return cityMapper.findByCityName(cityName);

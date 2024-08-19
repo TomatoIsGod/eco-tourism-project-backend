@@ -14,6 +14,9 @@ import java.util.List;
  */
 public interface CityMapper extends BaseMapperPlus<City, CityVO> {
 
+    List<CityVO> selectCitiesByCondition(@Param("cityId") Long cityId, @Param("cityName") String cityName,
+                                       @Param("tagId") Long tagId, @Param("tagName") String tagName);
+
     @Select("SELECT * FROM city WHERE city_name LIKE CONCAT('%', #{cityName}, '%')")
     List<CityVO> findByCityName(@Param("cityName") String cityName);
 

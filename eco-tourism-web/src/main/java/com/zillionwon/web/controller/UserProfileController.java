@@ -31,7 +31,12 @@ public class UserProfileController {
      */
     @GetMapping
     public R<UserVO> getProfile() {
-        return R.ok(userProfileService.getUserProfile(LoginHelper.getUserId()));
+        UserVO profile = userProfileService.getUserProfile(LoginHelper.getUserId());
+        if (profile == null) {
+            return R.ok("未获取到用户个人信息");
+        } else {
+            return R.ok(profile);
+        }
     }
 
     /**
