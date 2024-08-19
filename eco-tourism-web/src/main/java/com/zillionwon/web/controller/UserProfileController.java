@@ -37,10 +37,10 @@ public class UserProfileController {
     /**
      * 更新用户个人信息
      * @param bo 用户信息
-     * @return 修改的行数
+     * @return 是否成功
      */
     @PutMapping
-    public R<UserVO> updateProfile(User bo) {
+    public R<Void> updateProfile(User bo) {
         bo.setUserId(LoginHelper.getUserId());
         if (userProfileService.updateUserProfile(bo) == 1) {
             return R.ok();

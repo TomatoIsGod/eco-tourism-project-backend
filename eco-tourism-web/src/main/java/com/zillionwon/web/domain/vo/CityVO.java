@@ -55,10 +55,10 @@ public class CityVO {
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
-    public void setTags(Tag... tags) {
+    public void addTags(Tag... tags) {
         this.tags.addAll(Arrays.stream(tags).toList());
     }
-    public void setTags(Tag tags) {
+    public void addTags(Tag tags) {
         this.tags.add(tags);
     }
 
