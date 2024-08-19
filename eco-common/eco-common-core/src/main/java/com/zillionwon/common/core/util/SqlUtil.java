@@ -1,4 +1,4 @@
-package com.zillionwon.web.util;
+package com.zillionwon.common.core.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

@@ -219,6 +219,7 @@
         <module>eco-common</module>
 <!--        <module>eco-tourism-spider</module>-->
         <module>eco-tourism-web</module>
+        <module>eco-common/eco-common-wxapi</module>
     </modules>
 
     <build>

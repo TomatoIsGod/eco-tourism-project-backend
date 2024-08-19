@@ -1,7 +1,7 @@
 package com.zillionwon.web.controller;
 
 import com.zillionwon.common.core.domain.R;
-import com.zillionwon.web.service.WxApiService;
+import com.zillionwon.common.wxapi.service.WxApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -8,13 +8,15 @@ import com.zillionwon.common.core.util.JsonUtils;
 import com.zillionwon.common.core.util.ValidatorUtils;
 import com.zillionwon.web.domain.vo.LoginVO;
 import com.zillionwon.web.domain.vo.UserVO;
-import com.zillionwon.web.exception.WxApiException;
+import com.zillionwon.common.wxapi.exception.WxApiException;
 import com.zillionwon.web.service.IAuthStrategy;
 import com.zillionwon.web.service.IUserService;
-import com.zillionwon.web.service.WxApiService;
+import com.zillionwon.common.wxapi.service.WxApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 /**
  * 微信小程序登录授权实现类
@@ -37,7 +39,7 @@ public class WxAuthStrategy implements IAuthStrategy {
     @Override
     public LoginVO login(String body) {
         WxLoginBody loginBody = ValidatorUtils.validate(JsonUtils.parseObject(body, WxLoginBody.class));
-        String openId = wxApiService.code2Session(loginBody.getWxCode());
+        String openId = wxApiService.code2Session(Objects.requireNonNull(loginBody).getWxCode());
         LoginVO loginVO = new LoginVO();
         // 从数据库获取用户信息，如果不存在则抛出异常
         UserVO userVO = getUserByOpenid(openId);

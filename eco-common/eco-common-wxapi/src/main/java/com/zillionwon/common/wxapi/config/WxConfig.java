@@ -1,4 +1,4 @@
-package com.zillionwon.web.config;
+package com.zillionwon.common.wxapi.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

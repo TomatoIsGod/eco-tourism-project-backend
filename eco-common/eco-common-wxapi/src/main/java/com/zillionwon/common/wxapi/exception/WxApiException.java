@@ -1,4 +1,4 @@
-package com.zillionwon.web.exception;
+package com.zillionwon.common.wxapi.exception;
 
 import com.zillionwon.common.core.exception.BaseException;
 
