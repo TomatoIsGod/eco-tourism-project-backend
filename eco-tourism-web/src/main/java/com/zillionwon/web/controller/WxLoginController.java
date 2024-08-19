@@ -2,7 +2,6 @@ package com.zillionwon.web.controller;
 
 import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.service.WxApiService;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 微信小程序登录控制器
+ * 微信小程序登录相关
  *
  * @author InwardFlow
  */
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/wxLogin")
 @CrossOrigin
-@Api(tags = "微信登录相关")
 public class WxLoginController {
 
     public final WxApiService wxApiService;

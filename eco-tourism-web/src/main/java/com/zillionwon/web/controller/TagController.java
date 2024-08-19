@@ -1,7 +1,6 @@
 package com.zillionwon.web.controller;
 
 import com.zillionwon.web.domain.Tag;
-import io.swagger.annotations.Api;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,7 +20,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/tag")
 @CrossOrigin
-@Api(tags = "城市分类接口服务")
 public class TagController {
 
     @Resource(name = "jdbcTemplate")

@@ -3,6 +3,7 @@ package com.zillionwon.web;
 import cn.dev33.satoken.stp.StpUtil;
 import com.zillionwon.common.core.domain.R;
 import com.zillionwon.common.core.util.JsonUtils;
+import com.zillionwon.common.satoken.util.LoginHelper;
 import com.zillionwon.web.domain.vo.LoginVO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,7 @@ public class SaTokenTest {
         loginVO.setToken(StpUtil.getTokenValue());
         System.out.println(R.ok(JsonUtils.toJsonString(loginVO)));
         System.out.println(StpUtil.getLoginId());
+        System.out.println(LoginHelper.getLoginUser(loginVO.getToken()));
     }
 
 }
