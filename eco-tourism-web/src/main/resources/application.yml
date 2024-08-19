@@ -7,6 +7,8 @@ wx:
 
 # springdoc-openapi项目配置
 springdoc:
+  # 将对象参数转为 k-v 模式
+  default-flat-param-object: true
   swagger-ui:
     path: /swagger-ui.html
     tags-sorter: alpha
