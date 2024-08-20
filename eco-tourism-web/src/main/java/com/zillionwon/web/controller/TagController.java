@@ -38,7 +38,7 @@ public class TagController {
         List<Tag> cityTags = new ArrayList<>();
 
         // 构建SQL查询语句
-        String sql = "SELECT tag_id, tag_name FROM tag WHERE status = 1";
+        String sql = "SELECT tag_id, tag_name FROM tag WHERE status = 0";
         List<Object> parameters = new ArrayList<>();
         if (tagId != null) {
             sql += " AND tag_id = ?";
