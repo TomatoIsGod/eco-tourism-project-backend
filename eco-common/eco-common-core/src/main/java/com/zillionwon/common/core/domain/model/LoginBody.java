@@ -1,6 +1,7 @@
 package com.zillionwon.common.core.domain.model;
 
-import jakarta.validation.constraints.NotBlank;
+import com.zillionwon.common.core.constant.GrantType;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serial;
@@ -14,24 +15,18 @@ import java.io.Serializable;
 
 @Data
 public class LoginBody implements Serializable {
-
     @Serial
     private static final long serialVersionUID = 1L;
 
     /**
-     * 授权类型
+     * 授权类型 (小程序, Web 端等)
      */
-    @NotBlank(message = "{auth.grant.type.not.blank}")
-    private String grantType;
+    @NotNull(message = "{auth.grant.type.not.null}")
+    private GrantType grantType;
 
     /**
-     * 验证码
+     * 用户授权令牌
      */
-    private String code;
-
-    /**
-     * 唯一标识
-     */
-    private String uuid;
+    private String token;
 
 }

@@ -1,6 +1,8 @@
 package com.zillionwon.common.core.domain.model;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 微信小程序登录对象
@@ -8,6 +10,8 @@ import jakarta.validation.constraints.NotBlank;
  * @author InwardFlow
  */
 
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class WxLoginBody extends LoginBody {
 
     /**
@@ -16,11 +20,4 @@ public class WxLoginBody extends LoginBody {
     @NotBlank(message = "{wx.code.not.blank}")
     private String wxCode;
 
-    public String getWxCode() {
-        return wxCode;
-    }
-
-    public void setWxCode(String wxCode) {
-        this.wxCode = wxCode;
-    }
 }

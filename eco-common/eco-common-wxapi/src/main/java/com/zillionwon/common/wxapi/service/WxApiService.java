@@ -2,8 +2,10 @@ package com.zillionwon.common.wxapi.service;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONUtil;
+import com.zillionwon.common.core.util.JsonUtils;
 import com.zillionwon.common.core.util.ValidatorUtils;
 import com.zillionwon.common.wxapi.config.WxConfig;
+import com.zillionwon.common.wxapi.model.Code2Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,21 +28,23 @@ public class WxApiService {
 
     /**
      * 获取 openId 用户唯一标识
+     *
      * @param wxCode 小程序调用 wx.login 返回的 code
      * @return JSON 字符串
      */
-    public String code2Session(String wxCode) {
+    public Code2Session code2Session(String wxCode) {
         String requestUrl = "https://api.weixin.qq.com/sns/jscode2session";
-        Map<String, String> requestUrlParam = new HashMap<>();
+        Map<String, Object> requestUrlParam = new HashMap<>();
         requestUrlParam.put("appid", wxConfig.getAppId());
         requestUrlParam.put("secret", wxConfig.getAppSecret());
         requestUrlParam.put("js_code", wxCode);
         requestUrlParam.put("grant_type", "authorization_code");
-        return ValidatorUtils.validate(HttpRequest.post(requestUrl)
-                .body(JSONUtil.toJsonStr(requestUrlParam))
+        return ValidatorUtils.validate(JsonUtils.parseObject(HttpRequest.post(requestUrl)
+                .header("Content-Type", "multipart/form-data")
+                .form(requestUrlParam)
                 .timeout(5000)
                 .execute()
-                .body());
+                .body(), Code2Session.class));
     }
 
     /**
@@ -53,6 +57,7 @@ public class WxApiService {
         Map<String, String> requestUrlParam = new HashMap<>();
         requestUrlParam.put("code", wxCode);
         return ValidatorUtils.validate(JSONUtil.parseObj(HttpRequest.post(requestUrl)
+                .header("Content-Type", "multipart/form-data")
                 .body(JSONUtil.toJsonStr(requestUrlParam))
                 .timeout(5000)
                 .execute()

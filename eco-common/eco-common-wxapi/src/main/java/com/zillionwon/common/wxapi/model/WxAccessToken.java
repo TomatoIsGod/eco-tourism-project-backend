@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
  * @author InwardFlow
  */
 
-public class WxAccessToken {
+public class WxAccessToken extends WxBaseEntity {
 
     /**
      * 获取到的凭证
