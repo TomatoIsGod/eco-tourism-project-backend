@@ -1,11 +1,13 @@
 package com.zillionwon.common.wxapi.service;
 
-import cn.hutool.http.HttpRequest;
-import cn.hutool.json.JSONUtil;
-import com.zillionwon.common.core.util.ValidatorUtils;
+import com.zillionwon.common.core.util.HttpUtils;
 import com.zillionwon.common.wxapi.config.WxConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zillionwon.common.wxapi.constant.WxApiUrlEnum;
+import com.zillionwon.common.wxapi.model.Code2Session;
+import com.zillionwon.common.wxapi.model.GetPhoneNumber;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,30 +19,28 @@ import java.util.Map;
  */
 
 @Service
+@Validated
 public class WxApiService {
+
     private final WxConfig wxConfig;
-    @Autowired
+
     public WxApiService(WxConfig wxConfig) {
         this.wxConfig = wxConfig;
     }
 
     /**
      * 获取 openId 用户唯一标识
+     *
      * @param wxCode 小程序调用 wx.login 返回的 code
      * @return JSON 字符串
      */
-    public String code2Session(String wxCode) {
-        String requestUrl = "https://api.weixin.qq.com/sns/jscode2session";
+    public @Valid Code2Session code2Session(String wxCode) {
         Map<String, String> requestUrlParam = new HashMap<>();
         requestUrlParam.put("appid", wxConfig.getAppId());
         requestUrlParam.put("secret", wxConfig.getAppSecret());
         requestUrlParam.put("js_code", wxCode);
         requestUrlParam.put("grant_type", "authorization_code");
-        return ValidatorUtils.validate(HttpRequest.post(requestUrl)
-                .body(JSONUtil.toJsonStr(requestUrlParam))
-                .timeout(5000)
-                .execute()
-                .body());
+        return HttpUtils.postForBean(WxApiUrlEnum.CODE_2_SESSION.build(), Code2Session.class, requestUrlParam);
     }
 
     /**
@@ -48,14 +48,11 @@ public class WxApiService {
      * @param wxCode 小程序调用 wx.login 返回的 code
      * @return 手机号
      */
-    public String code2PhoneNumber(String wxCode) {
-        String requestUrl = "https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=" + wxConfig.getAccessToken();
+    public @Valid GetPhoneNumber code2PhoneNumber(String wxCode) {
+        String requestUrl = WxApiUrlEnum.GET_PHONE_NUMBER.build("access_token=" + wxConfig.getAccessToken()) ;
         Map<String, String> requestUrlParam = new HashMap<>();
         requestUrlParam.put("code", wxCode);
-        return ValidatorUtils.validate(JSONUtil.parseObj(HttpRequest.post(requestUrl)
-                .body(JSONUtil.toJsonStr(requestUrlParam))
-                .timeout(5000)
-                .execute()
-                .body()).getStr("phone_number"));
+        return HttpUtils.postForBean(requestUrl, GetPhoneNumber.class, requestUrlParam);
     }
+
 }

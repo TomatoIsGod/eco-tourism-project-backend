@@ -1,6 +1,8 @@
 package com.zillionwon.common.wxapi.model;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 微信小程序 getAccessToken 实体类
@@ -9,7 +11,9 @@ import jakarta.validation.constraints.NotNull;
  * @author InwardFlow
  */
 
-public class WxAccessToken {
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class WxAccessToken extends WxBaseEntity {
 
     /**
      * 获取到的凭证
@@ -23,19 +27,4 @@ public class WxAccessToken {
     @NotNull
     private Integer expiresIn;
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public Integer getExpiresIn() {
-        return expiresIn;
-    }
-
-    public void setExpiresIn(Integer expiresIn) {
-        this.expiresIn = expiresIn;
-    }
 }

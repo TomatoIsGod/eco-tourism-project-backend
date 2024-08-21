@@ -1,8 +1,11 @@
 package com.zillionwon.web.handler;
 
 import com.zillionwon.common.core.domain.R;
+import com.zillionwon.common.core.util.StreamUtils;
 import com.zillionwon.common.wxapi.exception.WxApiException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingPathVariableException;
@@ -73,5 +76,15 @@ public class GlobalExceptionHandler {
         String requestUri = request.getRequestURI();
         log.error("请求地址'{}',小程序接口发生系统异常.", requestUri, e);
         return R.fail(e.getMessage());
+    }
+
+    /**
+     * Validator 校验异常
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public R<Void> constraintViolationException(ConstraintViolationException e) {
+        log.error(e.getMessage());
+        String message = StreamUtils.join(e.getConstraintViolations(), ConstraintViolation::getMessage, ", ");
+        return R.fail(message);
     }
 }

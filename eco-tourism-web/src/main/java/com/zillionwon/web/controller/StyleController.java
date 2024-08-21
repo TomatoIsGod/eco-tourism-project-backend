@@ -82,10 +82,11 @@ public class StyleController extends BaseController {
     /**
      * 删除风格
      * @param styleName 风格名称
+     * @return 是否成功
      */
     @SaCheckRole("admin")
     @DeleteMapping
-    public R<Style> deleteByName(@RequestParam String styleName) {
+    public R<Void> deleteByName(@RequestParam String styleName) {
         List<Style> styles = styleService.getAllStyle();
         for (Style style : styles) {
             if (style.getStyleName().equals(styleName)) {
@@ -102,6 +103,7 @@ public class StyleController extends BaseController {
      *
      * @param styleId   风格ID
      * @param styleName 风格名称
+     * @return 是否成功
      */
     @SaCheckRole("admin")
     @PutMapping

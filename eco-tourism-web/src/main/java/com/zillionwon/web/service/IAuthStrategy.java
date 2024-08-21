@@ -1,7 +1,7 @@
 package com.zillionwon.web.service;
 
 import com.zillionwon.common.core.util.SpringUtils;
-import com.zillionwon.web.constant.GrantType;
+import com.zillionwon.common.core.constant.GrantType;
 import com.zillionwon.web.domain.vo.LoginVO;
 
 /**

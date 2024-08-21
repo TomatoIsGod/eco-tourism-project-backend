@@ -32,6 +32,11 @@ public class CityVO {
      */
     private List<Tag> tags;
 
+    /**
+     * 封面图片URL
+     */
+    private String coverImgUrl;
+
     public Long getCityId() {
         return cityId;
     }
@@ -62,4 +67,11 @@ public class CityVO {
         this.tags.add(tags);
     }
 
+    public String getCoverImgUrl() {
+        return coverImgUrl;
+    }
+
+    public void setCoverImgUrl(String coverImgUrl) {
+        this.coverImgUrl = coverImgUrl;
+    }
 }

@@ -1,5 +1,6 @@
 package com.zillionwon.web.controller;
 
+import com.zillionwon.common.core.domain.R;
 import com.zillionwon.web.domain.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -33,12 +34,12 @@ public class TagController {
      * @return          符合条件的标签列表
      */
     @GetMapping
-    public List<Tag> getCityTags(@RequestParam(required = false) Long tagId,
-                                 @RequestParam(required = false) String tagName) {
+    public R<List<Tag>> getCityTags(@RequestParam(required = false) Long tagId,
+                                    @RequestParam(required = false) String tagName) {
         List<Tag> cityTags = new ArrayList<>();
 
         // 构建SQL查询语句
-        String sql = "SELECT tag_id, tag_name FROM tag WHERE isopen = 1";
+        String sql = "SELECT tag_id, tag_name FROM tag WHERE status = 0";
         List<Object> parameters = new ArrayList<>();
         if (tagId != null) {
             sql += " AND tag_id = ?";
@@ -60,7 +61,7 @@ public class TagController {
             cityTags.add(tag);
         }
 
-        return cityTags;
+        return R.ok(cityTags);
     }
 
 }
