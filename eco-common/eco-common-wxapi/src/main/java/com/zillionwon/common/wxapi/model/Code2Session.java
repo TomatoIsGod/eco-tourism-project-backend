@@ -14,8 +14,8 @@ import lombok.EqualsAndHashCode;
 
 
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class Code2Session extends WxBaseEntity{
+@EqualsAndHashCode(callSuper = true)
+public class Code2Session extends WxBaseEntity {
 
     /**
      * 用户唯一标识
@@ -36,17 +36,5 @@ public class Code2Session extends WxBaseEntity{
      */
     @JsonProperty("unionid")
     private String unionId;
-
-    /**
-     * 错误码
-     */
-    @JsonProperty("errcode")
-    private Integer errCode;
-
-    /**
-     * 错误信息
-     */
-    @JsonProperty("errmsg")
-    private String errMsg;
 
 }

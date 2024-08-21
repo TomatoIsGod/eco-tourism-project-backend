@@ -2,6 +2,7 @@ package com.zillionwon.web.controller;
 
 import com.zillionwon.common.core.domain.R;
 import com.zillionwon.common.wxapi.model.Code2Session;
+import com.zillionwon.common.wxapi.model.GetPhoneNumber;
 import com.zillionwon.common.wxapi.service.WxApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,7 +45,7 @@ public class WxLoginController {
      * @return 手机号
      */
     @PostMapping("/getPhoneNumber")
-    public R<String> getPhoneNumber(String code) {
+    public R<GetPhoneNumber> getPhoneNumber(String code) {
         return R.ok("获取成功", wxApiService.code2PhoneNumber(code));
     }
 }
