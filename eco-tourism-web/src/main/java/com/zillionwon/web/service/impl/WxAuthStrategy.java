@@ -50,7 +50,7 @@ public class WxAuthStrategy implements IAuthStrategy {
         Code2Session code2Session = wxApiService.code2Session(Objects.requireNonNull(loginBody).getWxCode());
         String openId = code2Session.getOpenId();
 
-        // 从数据库获取用户信息，如果不存在则抛出异常
+        // 从数据库获取用户信息，如果不存在则自动注册
         UserVO userVO = getUserByOpenId(openId);
 
         // 执行登录操作
@@ -65,21 +65,18 @@ public class WxAuthStrategy implements IAuthStrategy {
 
     private UserVO getUserByOpenId(String openId) {
         // 使用 openId 查询绑定用户 如未绑定用户 则根据业务自行处理 例如 创建默认用户
-        UserVO user = userService.selectUserByOpenId(openId);
-        if (ObjectUtil.isNull(user)) {
-            // 创建用户
-            log.info("登录用户：{} 不存在.", openId);
-            user.setOpenId(openId);
-            // TODO: 获取用户手机号
-            user.setPhoneNumber("13888888888");
-            registerService.register(MapstructUtils.convert(user, User.class));
-            throw new WxApiException("500", "用户不存在");
+        UserVO userVO = userService.selectUserByOpenId(openId);
+        if (ObjectUtil.isNull(userVO)) {
             // 用户不存在
-        } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
-            log.info("登录用户：{} 已被停用.", openId);
+            log.info("登录用户：{} 不存在.", openId);
+            // 创建用户
+            userVO.setOpenId(openId);
+            registerService.register(MapstructUtils.convert(userVO, User.class));
+        } else if (UserStatus.DISABLE.getCode().equals(userVO.getStatus())) {
             // 用户已被停用
+            log.info("登录用户：{} 已被停用.", openId);
             throw new WxApiException("500", "用户已停用");
         }
-        return user;
+        return userVO;
     }
 }
