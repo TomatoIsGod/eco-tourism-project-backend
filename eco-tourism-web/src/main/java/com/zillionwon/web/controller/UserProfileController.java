@@ -33,7 +33,7 @@ public class UserProfileController {
     public R<UserVO> getProfile() {
         UserVO profile = userProfileService.getUserProfile(LoginHelper.getUserId());
         if (profile == null) {
-            return R.ok("未获取到用户个人信息");
+            return R.fail("未获取到用户个人信息");
         } else {
             return R.ok(profile);
         }
