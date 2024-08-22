@@ -57,11 +57,9 @@ spring:
       timeout: 1s
       database: 0
 
-
 # Logger Config
 logging:
-  level:
-    com.baomidou.mybatisplus.samples.quickstart: debug
+  config: classpath:logback-spring.xml
 
 mybatis-plus:
   configuration:

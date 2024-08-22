@@ -36,7 +36,7 @@
         <jakarta-annotation.version>2.1.1</jakarta-annotation.version>
         <lombok.version>1.18.30</lombok.version>
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
-        <mapstruct-plus.version>1.4.3</mapstruct-plus.version>
+        <mapstruct-plus.version>1.4.4</mapstruct-plus.version>
         <mapstruct-plus.binding.version>0.2.0</mapstruct-plus.binding.version>
         <springdoc.version>1.8.0</springdoc.version>
         <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
