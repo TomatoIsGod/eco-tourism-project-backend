@@ -70,7 +70,9 @@ public class LoginHelper {
      * 获取用户id
      */
     public static Long getUserId() {
-        return Convert.toLong(getExtra(USER_KEY));
+        // TODO: 此处硬编码仅供测试使用
+        return 1L;
+//        return Convert.toLong(getExtra(USER_KEY));
     }
 
     /**
