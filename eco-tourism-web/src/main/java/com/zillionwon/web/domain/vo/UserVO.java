@@ -1,5 +1,6 @@
 package com.zillionwon.web.domain.vo;
 
+import com.zillionwon.web.domain.User;
 import io.github.linpeilie.annotations.AutoMapper;
 
 import java.time.OffsetDateTime;
@@ -9,7 +10,7 @@ import java.time.OffsetDateTime;
  *
  * @author InwardFlow
  */
-@AutoMapper(target = UserVO.class)
+@AutoMapper(target = User.class)
 public class UserVO {
     /**
      * 用户ID
@@ -43,22 +44,15 @@ public class UserVO {
      * 手机号
      */
     private String phoneNumber;
-    /**
-     * 备注
-     */
-    private String remark;
+
     /**
      * 用户性别（0男 1女 2未知）
      */
     private String sex;
     /**
-     * 帐号状态（0正常 1停用）
+     * 账号状态（0正常 1停用）
      */
     private String status;
-    /**
-     * 更新时间
-     */
-    private OffsetDateTime updateTime;
 
     public long getUserId() {
         return userId;
@@ -124,14 +118,6 @@ public class UserVO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
     public String getSex() {
         return sex;
     }
@@ -146,13 +132,5 @@ public class UserVO {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public OffsetDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(OffsetDateTime updateTime) {
-        this.updateTime = updateTime;
     }
 }

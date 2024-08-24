@@ -1,6 +1,9 @@
 package com.zillionwon.web.service;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.zillionwon.web.domain.User;
+import com.zillionwon.web.domain.bo.UserBO;
 import com.zillionwon.web.domain.vo.UserVO;
 import com.zillionwon.web.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,18 @@ public class UserProfileService {
         return userMapper.selectVoById(userId);
     }
 
-    public Integer updateUserProfile(User userBO) {
-        return userMapper.updateById(userBO);
+    /**
+     * 修改用户基本信息
+     *
+     * @param user 用户信息
+     * @return 影响的行数
+     */
+    public int updateUserProfile(UserBO user) {
+        return userMapper.update(null,
+                new LambdaUpdateWrapper<User>()
+                        .set(ObjectUtil.isNotNull(user.getNickName()), User::getNickName, user.getNickName())
+                        .set(ObjectUtil.isNotNull(user.getPhoneNumber()), User::getPhoneNumber, user.getPhoneNumber())
+                        .set(ObjectUtil.isNotEmpty(user.getSex()), User::getSex, user.getSex())
+                        .eq(User::getUserId, user.getUserId()));
     }
 }

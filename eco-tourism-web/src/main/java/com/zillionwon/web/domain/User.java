@@ -2,6 +2,8 @@ package com.zillionwon.web.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.zillionwon.web.domain.bo.UserProfileBO;
+import io.github.linpeilie.annotations.AutoMapper;
 
 import java.time.OffsetDateTime;
 
@@ -11,6 +13,7 @@ import java.time.OffsetDateTime;
  * @author InwardFlow
  */
 @TableName("sys_user")
+@AutoMapper(target = UserProfileBO.class)
 public class User extends BaseEntity {
     /**
      * 用户ID
