@@ -1,16 +1,20 @@
-package com.zillionwon.web.domain;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+package com.zillionwon.web.domain.vo;
+
+import com.zillionwon.web.domain.SightOverview;
+import io.github.linpeilie.annotations.AutoMapper;
+import lombok.EqualsAndHashCode;
+
 import java.math.BigDecimal;
 
 /**
- * 更新后景点总览实体类
- * @author InwardFlow
+ * 景点总览
+ *
+ * @author CH
  */
 
-@TableName("sight")
-public class Sight {
-    @TableId
+@AutoMapper(target = SightOverview.class)
+@EqualsAndHashCode(callSuper = false)
+public class SightOverviewVO {
     private Long id;
     private String city;
     private Long sightId;
@@ -27,11 +31,11 @@ public class Sight {
     private String coverImgUrl;
     private String openTime;
     private String closeTime;
-    private String description; // 目前数据结构里没有，先加来用
 
-     // Getters and setters
+    // 目前数据结构里没有，先加来用
+    private String description;
 
-     public Long getId() {
+    public Long getId() {
         return id;
     }
 
