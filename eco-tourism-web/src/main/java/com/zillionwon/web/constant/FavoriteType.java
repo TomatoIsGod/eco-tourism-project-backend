@@ -1,42 +1,69 @@
 package com.zillionwon.web.constant;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 /**
  * 用户收藏类型
  *
  * @author CH
  */
-
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public enum FavoriteType {
 
     /**
      * 城市
      */
-    City(1, "收藏城市"),
+    CITY(1, "收藏城市"),
 
     /**
      * 景点
      */
-    Sight(2, "收藏景点"),
+    SIGHT(2, "收藏景点"),
 
     /**
      * 旅行计划
      */
-    Report(3, "收藏旅游规划报告");
+    REPORT(3, "收藏旅游规划报告");
 
     /**
      * 枚举编码
      */
-    private Integer code;
+    private final Integer code;
 
     /**
      * 枚举描述
      */
-    private String desc;
+    private final String desc;
+
+    public static FavoriteType getByCode(Integer code) {
+        for (FavoriteType type : FavoriteType.values()) {
+            if (type.getCode().equals(code)) {
+                return type;
+            }
+        }
+        throw new RuntimeException("The enum with code [" + code + "] is not found in " + FavoriteType.class.getName());
+    }
+
+    public static FavoriteType getByName(String name) {
+        for (FavoriteType type : FavoriteType.values()) {
+            if (type.name().equals(name)) {
+                return type;
+            }
+        }
+        throw new EnumConstantNotPresentException(FavoriteType.class, name);
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    FavoriteType(Integer code, String desc) {
+        this.code = code;
+        this.desc = desc;
+    }
+
+    @Override
+    public String toString() {
+        return "FavoriteType{" +
+                "code=" + code +
+                ", desc='" + desc + '\'' +
+                '}';
+    }
 }

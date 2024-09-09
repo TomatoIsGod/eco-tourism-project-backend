@@ -44,7 +44,7 @@ public class UserFavoritesService {
      */
     public void addFavoriteSight(Long userId, Long sightId) {
 
-        userFavoritesMapper.insert(userId, FavoriteType.Sight.getCode(), sightId);
+        userFavoritesMapper.insert(userId, FavoriteType.SIGHT.getCode(), sightId);
     }
 
     /**
@@ -54,16 +54,16 @@ public class UserFavoritesService {
      * @param sightId 收藏内容
      */
     public void deleteFavoriteSight(Long userId, Long sightId) {
-        userFavoritesMapper.delete(userId, FavoriteType.Sight.getCode(), sightId);
+        userFavoritesMapper.delete(userId, FavoriteType.SIGHT.getCode(), sightId);
     }
 
 
     public List<City> getFavoriteCities(Long userId) {
-        return userFavoritesMapper.findCitiesByUserId(userId, FavoriteType.City.getCode());
+        return userFavoritesMapper.findCitiesByUserId(userId, FavoriteType.CITY.getCode());
     }
 
     public City getFavoriteCity(Long userId, Long cityId) {
-        return userFavoritesMapper.findCityByObjectId(userId, cityId, FavoriteType.City.getCode());
+        return userFavoritesMapper.findCityByObjectId(userId, cityId, FavoriteType.CITY.getCode());
     }
 
     /**
@@ -74,7 +74,7 @@ public class UserFavoritesService {
      */
     public void addFavoriteCity(Long userId, Long cityId) {
 
-        userFavoritesMapper.insert(userId, FavoriteType.City.getCode(), cityId);
+        userFavoritesMapper.insert(userId, FavoriteType.CITY.getCode(), cityId);
     }
 
     /**
@@ -84,6 +84,6 @@ public class UserFavoritesService {
      * @param cityId 收藏城市Id
      */
     public void deleteFavoriteCity(Long userId, Long cityId) {
-        userFavoritesMapper.delete(userId, FavoriteType.City.getCode(), cityId);
+        userFavoritesMapper.delete(userId, FavoriteType.CITY.getCode(), cityId);
     }
 }
