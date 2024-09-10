@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * 旅行详细路书主页数据
+ *
+ * @author Ciel3232
  */
 public class RouteReportDTO {
     private String city;
@@ -71,15 +73,15 @@ public class RouteReportDTO {
     public static class SightDetail {
         private String name;
         private String rankTag;
-        private double score;
+        private String score;
         private String openTime;
         private String closeTime;
         private double price;
         private String address;
         private String description;
         private String summary;
-        private String cover_img_url;
-        private long sight_id;
+        private String coverImgUrl;
+        private long sightId;
 
         // Getters and setters
 
@@ -99,11 +101,11 @@ public class RouteReportDTO {
             this.rankTag = rankTag;
         }
 
-        public double getScore() {
+        public String getScore() {
             return score;
         }
 
-        public void setScore(double score) {
+        public void setScore(String score) {
             this.score = score;
         }
 
@@ -154,17 +156,17 @@ public class RouteReportDTO {
             this.summary = summary;
         }
         public String getCoverImgUrl() {
-            return this.cover_img_url;
+            return this.coverImgUrl;
         }
-        public void setCoverImgUrl(String cover_img_url) {
-            this.cover_img_url = cover_img_url;
+        public void setCoverImgUrl(String coverImgUrl) {
+            this.coverImgUrl = coverImgUrl;
         }
         public long getSightId() {
-            return sight_id;
+            return sightId;
         }
 
-        public void setSightId(int sight_id) {
-            this.sight_id = sight_id;
+        public void setSightId(int sightId) {
+            this.sightId = sightId;
         }
     }
 }

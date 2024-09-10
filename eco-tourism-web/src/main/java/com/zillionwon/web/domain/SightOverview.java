@@ -1,5 +1,6 @@
 package com.zillionwon.web.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 /**
  * 景点总览实体类
+ *
  * @author InwardFlow
  */
 @TableName("sight_overview")
@@ -33,15 +35,16 @@ public class SightOverview extends BaseEntity {
     /**
      * 标签
      */
+    @TableField(exist = false)
     private List<String> tags = new ArrayList<>();
     /**
      * 热度
      */
-    private Double heat;
+    private String heat;
     /**
      * 评分
      */
-    private Double score;
+    private String score;
     /**
      * 评分人数
      */
@@ -79,8 +82,6 @@ public class SightOverview extends BaseEntity {
      */
     private String coverImgUrl;
 
-    private String dis;
-
     public String getName() {
         return name;
     }
@@ -113,19 +114,19 @@ public class SightOverview extends BaseEntity {
         this.tags = tags;
     }
 
-    public Double getHeat() {
+    public String getHeat() {
         return heat;
     }
 
-    public void setHeat(Double heat) {
+    public void setHeat(String heat) {
         this.heat = heat;
     }
 
-    public double getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(Double score) {
+    public void setScore(String score) {
         this.score = score;
     }
 
@@ -171,6 +172,7 @@ public class SightOverview extends BaseEntity {
     public void setCloseTime(String closeTime) {
         this.closeTime = closeTime;
     }
+
     public Long getSightId() {
         return sightId;
     }
@@ -179,14 +181,22 @@ public class SightOverview extends BaseEntity {
         this.sightId = sightId;
     }
 
+    public String getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(String openTime) {
+        this.openTime = openTime;
+    }
+
     // Builder类
     public static class Builder {
         private String name;
         private String level;
         private String rankTag;
         private List<String> tags = new ArrayList<>();
-        private Double heat;
-        private Double score;
+        private String heat;
+        private String score;
         private String raterCount;
         private String address;
         private String distanceFromCity;
@@ -214,12 +224,12 @@ public class SightOverview extends BaseEntity {
             return this;
         }
 
-        public Builder heat(Double heat) {
+        public Builder heat(String heat) {
             this.heat = heat;
             return this;
         }
 
-        public Builder score(Double score) {
+        public Builder score(String score) {
             this.score = score;
             return this;
         }
@@ -257,11 +267,13 @@ public class SightOverview extends BaseEntity {
             this.tags = tags;
             return this;
         }
+
         public Builder closeTime(String closeTime) {
             this.closeTime = closeTime;
             return this;
         }
     }
+
     private SightOverview(Builder builder) {
         this.name = builder.name;
         this.level = builder.level;
@@ -277,7 +289,23 @@ public class SightOverview extends BaseEntity {
         this.closeTime = builder.closeTime;
     }
 
-    public String getOpenTime() {
-        return openTime;
+    @Override
+    public String toString() {
+        return "SightOverview{" +
+                "sightId=" + sightId +
+                ", name='" + name + '\'' +
+                ", level='" + level + '\'' +
+                ", rankTag='" + rankTag + '\'' +
+                ", tags=" + tags +
+                ", heat='" + heat + '\'' +
+                ", score='" + score + '\'' +
+                ", raterCount='" + raterCount + '\'' +
+                ", address='" + address + '\'' +
+                ", closeTime='" + closeTime + '\'' +
+                ", openTime='" + openTime + '\'' +
+                ", distanceFromCity='" + distanceFromCity + '\'' +
+                ", price=" + price +
+                ", coverImgUrl='" + coverImgUrl + '\'' +
+                '}';
     }
 }

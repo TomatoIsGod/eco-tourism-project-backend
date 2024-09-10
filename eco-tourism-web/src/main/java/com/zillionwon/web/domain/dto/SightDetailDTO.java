@@ -2,11 +2,13 @@ package com.zillionwon.web.domain.dto;
 
 /**
  * 旅行路书点击进任一景区详情界面数据
+ *
+ * @author Ciel3232
  */
 public class SightDetailDTO {
     private String name;
     private String rankTag;
-    private double score;
+    private String score;
     private String openTime;
     private String closeTime;
     private double price;
@@ -36,11 +38,11 @@ public class SightDetailDTO {
         this.rankTag = rankTag;
     }
 
-    public double getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(String score) {
         this.score = score;
     }
 

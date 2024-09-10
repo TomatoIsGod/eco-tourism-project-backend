@@ -3,6 +3,8 @@ import java.util.List;
 
 /**
  * 快捷路书界面数据
+ *
+ * @author Ciel3232
  */
 public class CityDetailDTO {
     private TransportationInfo transportationInfo;
@@ -87,7 +89,7 @@ public class CityDetailDTO {
     public static class SightInfo {
         private String name;
         private String rankTag;
-        private double score;
+        private String score;
         private String address;
         private String description;
 
@@ -108,11 +110,11 @@ public class CityDetailDTO {
             this.rankTag = rankTag;
         }
 
-        public double getScore() {
+        public String getScore() {
             return score;
         }
 
-        public void setScore(double score) {
+        public void setScore(String score) {
             this.score = score;
         }
 

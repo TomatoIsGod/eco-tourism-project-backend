@@ -23,7 +23,7 @@ public class SightOverviewVO {
     private String rankTag;
     private String tagsId;
     private BigDecimal heat;
-    private double score;
+    private String score;
     private String raterCount;
     private String address;
     private String distanceFromCity;
@@ -99,11 +99,11 @@ public class SightOverviewVO {
         this.heat = heat;
     }
 
-    public double getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(String score) {
         this.score = score;
     }
 
