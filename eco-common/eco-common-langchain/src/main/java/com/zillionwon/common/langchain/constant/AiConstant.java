@@ -7,5 +7,13 @@ package com.zillionwon.common.langchain.constant;
  */
 
 public class AiConstant {
+    /**
+     * 前缀
+     */
     public static final String CONFIG_PREFIX = "sys_llm_config";
+
+    /**
+     * 默认使用的模型
+     */
+    public static final String DEFAULT_CONFIG_KEY = "sys_llm:default_config";
 }

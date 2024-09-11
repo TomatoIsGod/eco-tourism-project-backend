@@ -14,7 +14,7 @@ public abstract class AiModelConfig {
 
     private Long id;
     private String apiKey;
-    private String model;
+    private String modelName;
     private boolean logRequests;
     private boolean logResponses;
     private Integer maxRetries;

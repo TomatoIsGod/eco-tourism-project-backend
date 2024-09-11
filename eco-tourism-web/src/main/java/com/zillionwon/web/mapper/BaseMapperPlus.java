@@ -3,6 +3,7 @@ package com.zillionwon.web.mapper;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.reflect.GenericTypeUtils;
@@ -69,5 +70,9 @@ public interface BaseMapperPlus<T, V> extends BaseMapper<T> {
         }
         voPage.setRecords(MapstructUtils.convert(list, voClass));
         return (P) voPage;
+    }
+
+    default List<T> selectList() {
+        return this.selectList(new QueryWrapper<>());
     }
 }
