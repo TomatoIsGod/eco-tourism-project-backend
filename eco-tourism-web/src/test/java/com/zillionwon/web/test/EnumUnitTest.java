@@ -1,4 +1,4 @@
-package com.zillionwon.web;
+package com.zillionwon.web.test;
 
 import com.zillionwon.web.constant.FavoriteType;
 import org.junit.jupiter.api.DisplayName;

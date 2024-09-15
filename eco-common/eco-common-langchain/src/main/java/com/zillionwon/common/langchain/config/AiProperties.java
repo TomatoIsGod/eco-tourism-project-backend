@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public abstract class AiModelConfig {
+public abstract class AiProperties {
 
     private Long id;
     private String apiKey;

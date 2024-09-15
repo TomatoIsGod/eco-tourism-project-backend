@@ -1,9 +1,8 @@
 package com.zillionwon.common.langchain.strategy;
 
 import com.zillionwon.common.core.util.JsonUtils;
-import com.zillionwon.common.langchain.config.IModelStrategy;
-import com.zillionwon.common.langchain.config.ZhipuModelConfig;
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import com.zillionwon.common.langchain.config.ZhipuAiProperties;
+import com.zillionwon.common.langchain.model.ChatLanguageModelDecorator;
 import dev.langchain4j.model.zhipu.ZhipuAiChatModel;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +18,13 @@ import java.util.Optional;
  */
 
 @Slf4j
-@Service("zhipu" + IModelStrategy.BASE_NAME)
-public class ZhipuModelStrategy implements IModelStrategy {
+@Service("zhipu" + AiStrategy.BASE_NAME)
+public class ZhipuAiStrategy implements AiStrategy {
 
     @Override
-    public ChatLanguageModel create(String properties) {
-        ZhipuModelConfig config = JsonUtils.parseObject(properties, ZhipuModelConfig.class);
-        return ZhipuAiChatModel.builder()
+    public ChatLanguageModelDecorator create(String properties) {
+        ZhipuAiProperties config = JsonUtils.parseObject(properties, ZhipuAiProperties.class);
+        return new ChatLanguageModelDecorator(ZhipuAiChatModel.builder()
                 .apiKey(Objects.requireNonNull(config).getApiKey())
                 .model(config.getModelName())
                 .logRequests(config.isLogRequests())
@@ -36,6 +35,6 @@ public class ZhipuModelStrategy implements IModelStrategy {
                 .baseUrl(Optional.ofNullable(config.getBaseUrl())
                         .filter(StringUtils::isNotBlank)
                         .orElse(null))
-                .build();
+                .build(), config);
     }
 }

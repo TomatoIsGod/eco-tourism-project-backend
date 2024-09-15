@@ -1,4 +1,4 @@
-package com.zillionwon.web;
+package com.zillionwon.web.test;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.zillionwon.common.core.domain.R;

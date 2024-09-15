@@ -127,4 +127,7 @@
         <!--        <appender-ref ref="sky_log"/>-->
     </root>
 
+    <!--设置test目录下日志分级为debug-->
+    <logger name="com.zillionwon.web.test" level="debug" />
+
 </configuration>
