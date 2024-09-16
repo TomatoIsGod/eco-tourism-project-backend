@@ -8,4 +8,5 @@ package com.zillionwon.common.core.domain;
 public interface WithProperties<T> {
     void setProperties(T properties);
     T getProperties();
+    boolean propertiesEqual(T t);
 }

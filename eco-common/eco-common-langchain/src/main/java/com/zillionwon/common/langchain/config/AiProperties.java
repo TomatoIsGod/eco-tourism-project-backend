@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public abstract class AiProperties {
+public class AiProperties {
 
     private Long id;
     private String apiKey;
@@ -20,4 +20,5 @@ public abstract class AiProperties {
     private Integer maxRetries;
     private Double temperature;
     private String baseUrl;
+    private String params;
 }

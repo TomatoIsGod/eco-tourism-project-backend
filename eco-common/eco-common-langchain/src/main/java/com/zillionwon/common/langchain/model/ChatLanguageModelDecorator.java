@@ -26,4 +26,9 @@ public class ChatLanguageModelDecorator implements WithAiProperties {
     public AiProperties getProperties() {
         return properties;
     }
+
+    @Override
+    public boolean propertiesEqual(AiProperties properties) {
+        return this.properties.equals(properties);
+    }
 }
