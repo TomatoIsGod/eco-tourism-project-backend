@@ -54,7 +54,7 @@
 
         <dependency>
             <groupId>com.zillionwon</groupId>
-            <artifactId>eco-common-langchain</artifactId>
+            <artifactId>agent4j-ai</artifactId>
             <version>${revision}</version>
         </dependency>
 

@@ -220,6 +220,7 @@
 <!--        <module>eco-tourism-spider</module>-->
         <module>eco-tourism-web</module>
         <module>eco-common/eco-common-wxapi</module>
+        <module>agent4j-modules</module>
     </modules>
 
     <build>
